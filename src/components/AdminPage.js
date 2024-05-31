@@ -1,11 +1,7 @@
 import React, { useState, useEffect } from 'react';
 
 const AdminPage = () => {
-  const [techs, setTechs] = useState([]);
-  const [sites, setSites] = useState([]);
-  const [notes, setNotes] = useState([]);
-  const [newTech, setNewTech] = useState('');
-  const [newSite, setNewSite] = useState('');
+  // Remove unused variables
 
   useEffect(() => {
     // Fetch data from Firestore or other data source
@@ -27,25 +23,7 @@ const AdminPage = () => {
     fetchData();
   }, []);
 
-  const handleAddTech = () => {
-    // Implementation for adding a tech
-  };
-
-  const handleRemoveTech = (tech) => {
-    // Implementation for removing a tech
-  };
-
-  const handleAddSite = () => {
-    // Implementation for adding a site
-  };
-
-  const handleRemoveSite = (site) => {
-    // Implementation for removing a site
-  };
-
-  const handleEditNote = (noteId, updatedNote) => {
-    // Implementation for editing a note
-  };
+  // Remove unused functions
 
   return (
     <div>
