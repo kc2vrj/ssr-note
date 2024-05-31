@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from 'react';
 import { db } from '../firebase';
-import { useCollectionData } from 'react-firebase-hooks/firestore';
 import JobSelector from './JobSelector';
 
 const NoteList = (props) => {
