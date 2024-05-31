@@ -1,10 +1,15 @@
-// Remove unused imports and variables
 import React from 'react';
+import { db } from '../firebase';
 
 const NoteForm = () => {
-  // Rest of the component code
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    // Add form data to Firebase
+    await db.collection('notes').add({ /* form data */ });
+  };
+
   return (
-    <form>
+    <form onSubmit={handleSubmit}>
       {/* Add form fields here */}
     </form>
   );
