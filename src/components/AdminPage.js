@@ -1,21 +1,25 @@
 import React, { useState, useEffect } from 'react';
+import { techsCollection, sitesCollection, db } from '../firebase';
 
 const AdminPage = () => {
   const [techs, setTechs] = useState([]);
   const [sites, setSites] = useState([]);
   const [notes, setNotes] = useState([]);
+  const [newTech, setNewTech] = useState('');
+  const [newSite, setNewSite] = useState('');
+  const [newNote, setNewNote] = useState('');
 
   useEffect(() => {
     const fetchData = async () => {
       try {
-        // Mock data for demonstration; replace with actual data fetching code
-        const techsData = ['Tech 1', 'Tech 2'];
-        const sitesData = ['Site 1', 'Site 2'];
-        const notesData = [{ id: 1, note: 'Note 1' }, { id: 2, note: 'Note 2' }];
+        // Fetch data from Firestore
+        const techsData = await techsCollection.get();
+        const sitesData = await sitesCollection.get();
+        const notesData = await db.collection('notes').get();
 
-        setTechs(techsData);
-        setSites(sitesData);
-        setNotes(notesData);
+        setTechs(techsData.docs.map((doc) => doc.data().name));
+        setSites(sitesData.docs.map((doc) => doc.data().name));
+        setNotes(notesData.docs.map((doc) => ({ id: doc.id, ...doc.data() })));
       } catch (error) {
         console.error('Error fetching data:', error);
       }
@@ -24,30 +28,66 @@ const AdminPage = () => {
     fetchData();
   }, []);
 
+  const handleAddTech = async () => {
+    // Add new tech to Firestore
+    await techsCollection.add({ name: newTech });
+    setNewTech('');
+  };
+
+  const handleAddSite = async () => {
+    // Add new site to Firestore
+    await sitesCollection.add({ name: newSite });
+    setNewSite('');
+  };
+
+  const handleAddNote = async () => {
+    // Add new note to Firestore
+    await db.collection('notes').add({ note: newNote });
+    setNewNote('');
+  };
+
   return (
     <div>
       <h1>Admin Page</h1>
       <div>
         <h2>Technicians</h2>
+        <input value={newTech} onChange={(e) => setNewTech(e.target.value)} />
+        <button onClick={handleAddTech}>Add Tech</button>
         <ul>
           {techs.map((tech, index) => (
-            <li key={index}>{tech}</li>
+            <li key={index}>
+              {tech}
+              <button>Edit</button>
+              <button>Delete</button>
+            </li>
           ))}
         </ul>
       </div>
       <div>
         <h2>Sites</h2>
+        <input value={newSite} onChange={(e) => setNewSite(e.target.value)} />
+        <button onClick={handleAddSite}>Add Site</button>
         <ul>
           {sites.map((site, index) => (
-            <li key={index}>{site}</li>
+            <li key={index}>
+              {site}
+              <button>Edit</button>
+              <button>Delete</button>
+            </li>
           ))}
         </ul>
       </div>
       <div>
         <h2>Notes</h2>
+        <input value={newNote} onChange={(e) => setNewNote(e.target.value)} />
+        <button onClick={handleAddNote}>Add Note</button>
         <ul>
           {notes.map((note) => (
-            <li key={note.id}>{note.note}</li>
+            <li key={note.id}>
+              {note.note}
+              <button>Edit</button>
+              <button>Delete</button>
+            </li>
           ))}
         </ul>
       </div>
