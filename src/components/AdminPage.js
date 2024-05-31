@@ -6,10 +6,9 @@ const AdminPage = () => {
   const [notes, setNotes] = useState([]);
 
   useEffect(() => {
-    // Fetch data from Firestore or other data source
     const fetchData = async () => {
       try {
-        // Code to fetch data from Firestore or other data source
+        // Mock data for demonstration; replace with actual data fetching code
         const techsData = ['Tech 1', 'Tech 2'];
         const sitesData = ['Site 1', 'Site 2'];
         const notesData = [{ id: 1, note: 'Note 1' }, { id: 2, note: 'Note 2' }];
@@ -25,12 +24,33 @@ const AdminPage = () => {
     fetchData();
   }, []);
 
-  // Remove unused functions
-
   return (
     <div>
       <h1>Admin Page</h1>
-      {/* Render the component content */}
+      <div>
+        <h2>Technicians</h2>
+        <ul>
+          {techs.map((tech, index) => (
+            <li key={index}>{tech}</li>
+          ))}
+        </ul>
+      </div>
+      <div>
+        <h2>Sites</h2>
+        <ul>
+          {sites.map((site, index) => (
+            <li key={index}>{site}</li>
+          ))}
+        </ul>
+      </div>
+      <div>
+        <h2>Notes</h2>
+        <ul>
+          {notes.map((note) => (
+            <li key={note.id}>{note.note}</li>
+          ))}
+        </ul>
+      </div>
     </div>
   );
 };
