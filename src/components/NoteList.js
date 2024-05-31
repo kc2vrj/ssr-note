@@ -3,7 +3,19 @@ import { db } from '../firebase';
 import JobSelector from './JobSelector';
 
 const NoteList = (props) => {
-  const [notes, setNotes] = useState(props.notes || []);
+  const [notes, setNotes] = useState([]);
+
+  useEffect(() => {
+    const unsubscribe = db.collection('notes').onSnapshot((snapshot) => {
+      const notesData = snapshot.docs.map((doc) => ({
+        id: doc.id,
+        ...doc.data(),
+      }));
+      setNotes(notesData);
+    });
+
+    return unsubscribe;
+  }, []);
   const [filterJob, setFilterJob] = useState('');
 
   useEffect(() => {
