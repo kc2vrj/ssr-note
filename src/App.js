@@ -1,25 +1,36 @@
-import logo from './logo.svg';
-import './App.css';
+import React from 'react';
+import { BrowserRouter as Router, Routes, Route, Link } from 'react-router-dom';
+import NoteForm from './components/NoteForm';
+import NoteList from './components/NoteList';
+import AdminPage from './components/AdminPage';
 
-function App() {
+const App = (props) => {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <Router>
+      <div className="container">
+        <h1>Note Taking App</h1>
+        <nav>
+          <ul>
+            <li>
+              <Link to="/">Note Entry</Link>
+            </li>
+            <li>
+              <Link to="/notes">View Notes</Link>
+            </li>
+            <li>
+              <Link to="/admin">Admin Page</Link>
+            </li>
+          </ul>
+        </nav>
+
+        <Routes>
+          <Route path="/admin" element={<AdminPage {...props} />} />
+          <Route path="/notes" element={<NoteList {...props} />} />
+          <Route path="/" element={<NoteForm {...props} />} />
+        </Routes>
+      </div>
+    </Router>
   );
-}
+};
 
 export default App;
