@@ -1,9 +1,5 @@
-import React, { useState } from 'react';
-import { db } from '../firebase';
-import JobSelector from './JobSelector';
-import TechSelector from './TechSelector';
-
-const initialProps = window.__INITIAL_PROPS__ || {};
+// Remove unused imports and variables
+import React from 'react';
 
 const NoteForm = () => {
   // Rest of the component code
