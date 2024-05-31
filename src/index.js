@@ -6,8 +6,6 @@ import App from './App';
 const initialProps = window.__INITIAL_PROPS__ || {};
 
 ReactDOM.hydrate(
-  <BrowserRouter>
-    <App {...initialProps} />
-  </BrowserRouter>,
+  <App {...initialProps} />,
   document.getElementById('root')
 );
