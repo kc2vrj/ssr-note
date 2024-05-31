@@ -34,14 +34,16 @@ const AdminPage = () => {
 
   const handleAddTech = async () => {
     // Add new tech to Firestore
-    await techsCollection.add({ name: newTech });
+    const docRef = await techsCollection.add({ name: newTech });
     setNewTech('');
+    return docRef;
   };
 
   const handleAddSite = async () => {
     // Add new site to Firestore
-    await sitesCollection.add({ name: newSite });
+    const docRef = await sitesCollection.add({ name: newSite });
     setNewSite('');
+    return docRef;
   };
 
   const handleAddNote = async () => {
@@ -52,27 +54,27 @@ const AdminPage = () => {
 
   const handleEditTech = async (tech) => {
     // Edit tech in Firestore
-    const techRef = techsCollection.doc(tech.id);
+    const techRef = await handleAddTech();
     await techRef.update({ name: newTech });
     setNewTech('');
   };
 
   const handleDeleteTech = async (tech) => {
     // Delete tech from Firestore
-    const techRef = techsCollection.doc(tech.id);
+    const techRef = await handleAddTech();
     await techRef.delete();
   };
 
   const handleEditSite = async (site) => {
     // Edit site in Firestore
-    const siteRef = sitesCollection.doc(site.id);
+    const siteRef = await handleAddSite();
     await siteRef.update({ name: newSite });
     setNewSite('');
   };
 
   const handleDeleteSite = async (site) => {
     // Delete site from Firestore
-    const siteRef = sitesCollection.doc(site.id);
+    const siteRef = await handleAddSite();
     await siteRef.delete();
   };
 
