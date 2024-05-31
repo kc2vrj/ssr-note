@@ -1,6 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import { BrowserRouter } from 'react-router-dom';
+// Remove BrowserRouter import
 import App from './App';
 
 const initialProps = window.__INITIAL_PROPS__ || {};
