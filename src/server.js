@@ -4,7 +4,7 @@ import React from 'react';
 import ReactDOMServer from 'react-dom/server';
 import { StaticRouter } from 'react-router-dom/server';
 import fs from 'fs';
-import AdminPage from './src/components/AdminPage';
+import AdminPage from './components/AdminPage';
 
 const app = express();
 const PORT = process.env.PORT || 3000;

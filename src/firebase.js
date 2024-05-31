@@ -19,5 +19,5 @@ firebase.initializeApp(firebaseConfig);
 
 export const db = firebase.firestore();
 export const firebaseApp = firebase.app();
-export const techsCollection = firebaseApp.firestore().collection('techs');
-export const sitesCollection = firebaseApp.firestore().collection('sites');
+export const techsCollection = db.collection('techs');
+export const sitesCollection = db.collection('sites');
