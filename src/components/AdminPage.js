@@ -1,7 +1,9 @@
 import React, { useState, useEffect } from 'react';
 
 const AdminPage = () => {
-  // Remove unused variables
+  const [techs, setTechs] = useState([]);
+  const [sites, setSites] = useState([]);
+  const [notes, setNotes] = useState([]);
 
   useEffect(() => {
     // Fetch data from Firestore or other data source
