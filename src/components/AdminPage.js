@@ -54,27 +54,27 @@ const AdminPage = () => {
 
   const handleEditTech = async (tech) => {
     // Edit tech in Firestore
-    const techRef = await handleAddTech();
+    const techRef = techsCollection.doc(tech);
     await techRef.update({ name: newTech });
     setNewTech('');
   };
 
   const handleDeleteTech = async (tech) => {
     // Delete tech from Firestore
-    const techRef = await handleAddTech();
+    const techRef = techsCollection.doc(tech);
     await techRef.delete();
   };
 
   const handleEditSite = async (site) => {
     // Edit site in Firestore
-    const siteRef = await handleAddSite();
+    const siteRef = sitesCollection.doc(site);
     await siteRef.update({ name: newSite });
     setNewSite('');
   };
 
   const handleDeleteSite = async (site) => {
     // Delete site from Firestore
-    const siteRef = await handleAddSite();
+    const siteRef = sitesCollection.doc(site);
     await siteRef.delete();
   };
 
