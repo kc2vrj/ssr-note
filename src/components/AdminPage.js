@@ -10,22 +10,26 @@ const AdminPage = () => {
   const [newNote, setNewNote] = useState('');
 
   useEffect(() => {
-    const fetchData = async () => {
-      try {
-        // Fetch data from Firestore
-        const techsData = await techsCollection.get();
-        const sitesData = await sitesCollection.get();
-        const notesData = await db.collection('notes').get();
+    const unsubscribeTechs = techsCollection.onSnapshot((snapshot) => {
+      const techsData = snapshot.docs.map((doc) => doc.data().name);
+      setTechs(techsData);
+    });
 
-        setTechs(techsData.docs.map((doc) => doc.data().name));
-        setSites(sitesData.docs.map((doc) => doc.data().name));
-        setNotes(notesData.docs.map((doc) => ({ id: doc.id, ...doc.data() })));
-      } catch (error) {
-        console.error('Error fetching data:', error);
-      }
+    const unsubscribeSites = sitesCollection.onSnapshot((snapshot) => {
+      const sitesData = snapshot.docs.map((doc) => doc.data().name);
+      setSites(sitesData);
+    });
+
+    const unsubscribeNotes = db.collection('notes').onSnapshot((snapshot) => {
+      const notesData = snapshot.docs.map((doc) => ({ id: doc.id, ...doc.data() }));
+      setNotes(notesData);
+    });
+
+    return () => {
+      unsubscribeTechs();
+      unsubscribeSites();
+      unsubscribeNotes();
     };
-
-    fetchData();
   }, []);
 
   const handleAddTech = async () => {
