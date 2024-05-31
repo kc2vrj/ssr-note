@@ -50,6 +50,45 @@ const AdminPage = () => {
     setNewNote('');
   };
 
+  const handleEditTech = async (tech) => {
+    // Edit tech in Firestore
+    const techRef = techsCollection.doc(tech.id);
+    await techRef.update({ name: newTech });
+    setNewTech('');
+  };
+
+  const handleDeleteTech = async (tech) => {
+    // Delete tech from Firestore
+    const techRef = techsCollection.doc(tech.id);
+    await techRef.delete();
+  };
+
+  const handleEditSite = async (site) => {
+    // Edit site in Firestore
+    const siteRef = sitesCollection.doc(site.id);
+    await siteRef.update({ name: newSite });
+    setNewSite('');
+  };
+
+  const handleDeleteSite = async (site) => {
+    // Delete site from Firestore
+    const siteRef = sitesCollection.doc(site.id);
+    await siteRef.delete();
+  };
+
+  const handleEditNote = async (note) => {
+    // Edit note in Firestore
+    const noteRef = db.collection('notes').doc(note.id);
+    await noteRef.update({ note: newNote });
+    setNewNote('');
+  };
+
+  const handleDeleteNote = async (note) => {
+    // Delete note from Firestore
+    const noteRef = db.collection('notes').doc(note.id);
+    await noteRef.delete();
+  };
+
   return (
     <div>
       <h1>Admin Page</h1>
@@ -61,8 +100,8 @@ const AdminPage = () => {
           {techs.map((tech, index) => (
             <li key={index}>
               {tech}
-              <button>Edit</button>
-              <button>Delete</button>
+              <button onClick={() => handleEditTech(tech)}>Edit</button>
+              <button onClick={() => handleDeleteTech(tech)}>Delete</button>
             </li>
           ))}
         </ul>
@@ -75,8 +114,8 @@ const AdminPage = () => {
           {sites.map((site, index) => (
             <li key={index}>
               {site}
-              <button>Edit</button>
-              <button>Delete</button>
+              <button onClick={() => handleEditSite(site)}>Edit</button>
+              <button onClick={() => handleDeleteSite(site)}>Delete</button>
             </li>
           ))}
         </ul>
@@ -88,9 +127,12 @@ const AdminPage = () => {
         <ul>
           {notes.map((note) => (
             <li key={note.id}>
-              {note.note}
-              <button>Edit</button>
-              <button>Delete</button>
+              <p>Note: {note.note}</p>
+              <p>Job: {note.job}</p>
+              <p>Tech: {note.tech}</p>
+              <p>Timestamp: {new Date(note.timestamp).toLocaleString()}</p>
+              <button onClick={() => handleEditNote(note)}>Edit</button>
+              <button onClick={() => handleDeleteNote(note)}>Delete</button>
             </li>
           ))}
         </ul>
