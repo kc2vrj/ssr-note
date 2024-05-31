@@ -42,7 +42,7 @@ const NoteList = (props) => {
             <p>{note.note}</p>
             <p>Job: {note.job}</p>
             <p>Tech: {note.tech}</p>
-            <p>Timestamp: {note.timestamp}</p>
+            <p>Timestamp: {new Date(note.timestamp).toLocaleString()}</p>
           </li>
         ))}
       </ul>
