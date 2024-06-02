@@ -1,5 +1,5 @@
-import firebase from 'firebase/compat/app';
-import 'firebase/compat/firestore';
+const firebase = require('firebase/compat/app');
+require('firebase/compat/firestore');
 
 const firebaseConfig = {
   apiKey: process.env.FIREBASE_API_KEY,
@@ -13,9 +13,11 @@ const firebaseConfig = {
 
 firebase.initializeApp(firebaseConfig);
 
-export const db = firebase.firestore();
-export const firebaseApp = firebase.app();
+const db = firebase.firestore();
+const firebaseApp = firebase.app();
 
 // Create references to the 'techs' and 'sites' collections
-export const techsCollection = db.collection('techs');
-export const sitesCollection = db.collection('sites');
+const techsCollection = db.collection('techs');
+const sitesCollection = db.collection('sites');
+
+module.exports = { db, firebaseApp, techsCollection, sitesCollection };
