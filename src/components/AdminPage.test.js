@@ -1,5 +1,6 @@
 import React from 'react';
 import { render, screen, fireEvent } from '@testing-library/react';
+import '@testing-library/jest-dom';
 import AdminPage from './AdminPage';
 
 test('renders AdminPage and adds a tech', () => {

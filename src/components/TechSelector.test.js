@@ -1,5 +1,6 @@
 import React from 'react';
 import { render, screen, fireEvent } from '@testing-library/react';
+import '@testing-library/jest-dom';
 import TechSelector from './TechSelector';
 
 test('renders TechSelector and selects a tech', () => {
