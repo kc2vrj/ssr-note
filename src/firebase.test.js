@@ -1,6 +1,6 @@
-import firebase from 'firebase/compat/app';
-import 'firebase/compat/firestore';
-import { db, firebaseApp, techsCollection, sitesCollection } from './firebase';
+const firebase = require('firebase/compat/app');
+require('firebase/compat/firestore');
+const { db, firebaseApp, techsCollection, sitesCollection } = require('./firebase');
 
 jest.mock('firebase/compat/app', () => {
   const firestore = jest.fn(() => ({
