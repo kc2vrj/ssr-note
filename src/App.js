@@ -3,7 +3,6 @@ import { BrowserRouter as Router, Routes, Route, Link } from 'react-router-dom';
 import NoteForm from './components/NoteForm';
 import NoteList from './components/NoteList';
 import AdminPage from './components/AdminPage';
-import hello from './hello';
 
 const App = (props) => {
   return (
