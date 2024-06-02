@@ -1,4 +1,4 @@
-import React from 'reaact';
+import React from 'react';
 import { BrowserRouter as Router, Routes, Route, Link } from 'react-router-dom';
 import NoteForm from './components/NoteForm';
 import NoteList from './components/NoteList';
