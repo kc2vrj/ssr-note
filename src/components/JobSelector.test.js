@@ -3,7 +3,7 @@ import { render, screen, fireEvent } from '@testing-library/react';
 import '@testing-library/jest-dom';
 import JobSelector from './JobSelector';
 
-test('renders JobSelector and selects a job', () => {
+test('renders JobSelector and selects a job', async () => {
   const setJob = jest.fn();
   render(<JobSelector selectedJob="" setJob={setJob} />);
 

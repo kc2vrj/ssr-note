@@ -3,7 +3,7 @@ import { render, screen, fireEvent } from '@testing-library/react';
 import '@testing-library/jest-dom';
 import NoteForm from './NoteForm';
 
-test('renders NoteForm and submits a note', () => {
+test('renders NoteForm and submits a note', async () => {
   render(<NoteForm />);
 
   const textareaElement = screen.getByRole('textbox');
