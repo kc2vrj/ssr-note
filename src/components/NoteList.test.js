@@ -1,10 +1,12 @@
 import React from 'react';
-import { render, screen } from '@testing-library/react';
+import { render, screen, act } from '@testing-library/react';
 import '@testing-library/jest-dom';
 import NoteList from './NoteList';
 
 test('renders NoteList and displays notes', () => {
-  render(<NoteList />);
+  await act(async () => {
+    render(<NoteList />);
+  });
 
   const noteElement = screen.queryByText(/Test Note/i);
   expect(noteElement).toBeInTheDocument();

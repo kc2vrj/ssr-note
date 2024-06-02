@@ -1,10 +1,12 @@
 import React from 'react';
-import { render, screen, fireEvent } from '@testing-library/react';
+import { render, screen, fireEvent, act } from '@testing-library/react';
 import '@testing-library/jest-dom';
 import AdminPage from './AdminPage';
 
 test('renders AdminPage and adds a tech', () => {
-  render(<AdminPage />);
+  await act(async () => {
+    render(<AdminPage />);
+  });
 
   const inputElement = screen.getAllByRole('textbox')[0];
   expect(inputElement).toBeInTheDocument();

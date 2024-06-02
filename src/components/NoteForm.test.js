@@ -1,10 +1,12 @@
 import React from 'react';
-import { render, screen, fireEvent } from '@testing-library/react';
+import { render, screen, fireEvent, act } from '@testing-library/react';
 import '@testing-library/jest-dom';
 import NoteForm from './NoteForm';
 
 test('renders NoteForm and submits a note', async () => {
-  render(<NoteForm />);
+  await act(async () => {
+    render(<NoteForm />);
+  });
 
   const textareaElement = screen.getByRole('textbox');
   expect(textareaElement).toBeInTheDocument();

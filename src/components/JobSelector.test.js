@@ -1,11 +1,13 @@
 import React from 'react';
-import { render, screen, fireEvent } from '@testing-library/react';
+import { render, screen, fireEvent, act } from '@testing-library/react';
 import '@testing-library/jest-dom';
 import JobSelector from './JobSelector';
 
 test('renders JobSelector and selects a job', async () => {
   const setJob = jest.fn();
-  render(<JobSelector selectedJob="" setJob={setJob} />);
+  await act(async () => {
+    render(<JobSelector selectedJob="" setJob={setJob} />);
+  });
 
   const selectElement = screen.getByRole('combobox');
   expect(selectElement).toBeInTheDocument();
