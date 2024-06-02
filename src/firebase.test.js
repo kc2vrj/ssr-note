@@ -1,4 +1,3 @@
-const jest = require('jest-mock');
 const firebase = require('firebase/compat/app');
 require('firebase/compat/firestore');
 const { db, firebaseApp, techsCollection, sitesCollection } = require('./firebase');
