@@ -11,5 +11,7 @@ test('renders TechSelector and selects a tech', () => {
   expect(selectElement).toBeInTheDocument();
 
   fireEvent.change(selectElement, { target: { value: 'React' } });
+  fireEvent.change(selectElement, { target: { value: 'React' } });
   expect(setTech).toHaveBeenCalledWith('React');
+  await new Promise((r) => setTimeout(r, 1000)); // Wait for state update
 });

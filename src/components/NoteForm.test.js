@@ -15,4 +15,5 @@ test('renders NoteForm and submits a note', () => {
   const buttonElement = screen.getByRole('button', { name: /Add Note/i });
   fireEvent.click(buttonElement);
   expect(textareaElement.value).toBe('');
+  await new Promise((r) => setTimeout(r, 1000)); // Wait for state update
 });

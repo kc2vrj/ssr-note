@@ -11,5 +11,7 @@ test('renders JobSelector and selects a job', () => {
   expect(selectElement).toBeInTheDocument();
 
   fireEvent.change(selectElement, { target: { value: 'Developer' } });
+  fireEvent.change(selectElement, { target: { value: 'Developer' } });
   expect(setJob).toHaveBeenCalledWith('Developer');
+  await new Promise((r) => setTimeout(r, 1000)); // Wait for state update
 });

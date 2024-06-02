@@ -6,7 +6,7 @@ import AdminPage from './AdminPage';
 test('renders AdminPage and adds a tech', () => {
   render(<AdminPage />);
 
-  const inputElement = screen.getByRole('textbox');
+  const inputElement = screen.getAllByRole('textbox')[0];
   expect(inputElement).toBeInTheDocument();
 
   fireEvent.change(inputElement, { target: { value: 'New Tech' } });

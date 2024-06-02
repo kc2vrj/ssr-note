@@ -6,6 +6,6 @@ import NoteList from './NoteList';
 test('renders NoteList and displays notes', () => {
   render(<NoteList />);
 
-  const noteElement = screen.getByText(/Test Note/i);
+  const noteElement = screen.queryByText(/Test Note/i);
   expect(noteElement).toBeInTheDocument();
 });
