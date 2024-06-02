@@ -9,7 +9,7 @@ import AdminPage from './components/AdminPage';
 const app = express();
 const PORT = process.env.PORT || 3000;
 
-app.use(express.static(path.resolve(__dirname, 'build')));
+app.use(express.static(path.resolve(__dirname, '../build')));
 
 app.get('/admin', (req, res) => {
   const reactComponent = ReactDOMServer.renderToString(
