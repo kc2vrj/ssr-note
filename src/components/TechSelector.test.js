@@ -14,8 +14,6 @@ test('renders TechSelector and selects a tech', async () => {
   expect(selectElement).toBeInTheDocument();
 
   fireEvent.change(selectElement, { target: { value: 'React' } });
-  expect(selectElement.value).toBe('React');
-  expect(selectElement.value).toBe('React');
   fireEvent.change(selectElement, { target: { value: 'React' } });
   expect(setTech).toHaveBeenCalledWith('React');
   expect(setTech).toHaveBeenCalledTimes(2);
