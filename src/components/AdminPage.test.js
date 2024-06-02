@@ -3,7 +3,7 @@ import { render, screen, fireEvent, act } from '@testing-library/react';
 import '@testing-library/jest-dom';
 import AdminPage from './AdminPage';
 
-test('renders AdminPage and adds a tech', () => {
+test('renders AdminPage and adds a tech', async () => {
   await act(async () => {
     render(<AdminPage />);
   });

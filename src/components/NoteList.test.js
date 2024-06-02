@@ -3,7 +3,7 @@ import { render, screen, act } from '@testing-library/react';
 import '@testing-library/jest-dom';
 import NoteList from './NoteList';
 
-test('renders NoteList and displays notes', () => {
+test('renders NoteList and displays notes', async () => {
   await act(async () => {
     render(<NoteList />);
   });
