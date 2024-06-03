@@ -14,19 +14,6 @@ const AdminPage = () => {
       const techsCollection = await getCollection('techs');
       const techsData = await techsCollection.find().toArray();
       setTechs(techsData.map(tech => tech.name));
-  };
-
-    const fetchSites = async () => {
-      const sitesCollection = await getCollection('sites');
-      const sitesData = await sitesCollection.find().toArray();
-      setSites(sitesData.map(site => site.name));
-  };
-
-  useEffect(() => {
-    const fetchTechs = async () => {
-      const techsCollection = await getCollection('techs');
-      const techsData = await techsCollection.find().toArray();
-      setTechs(techsData.map(tech => tech.name));
     };
 
     const fetchSites = async () => {
@@ -34,17 +21,6 @@ const AdminPage = () => {
       const sitesData = await sitesCollection.find().toArray();
       setSites(sitesData.map(site => site.name));
     };
-
-    const fetchNotes = async () => {
-      const notesCollection = await getCollection('notes');
-      const notesData = await notesCollection.find().toArray();
-      setNotes(notesData);
-    };
-
-    fetchTechs();
-    fetchSites();
-    fetchNotes();
-  }, []);
 
     const fetchNotes = async () => {
       const notesCollection = await getCollection('notes');
