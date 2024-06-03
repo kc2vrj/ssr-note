@@ -13,7 +13,8 @@ module.exports = {
         "os": require.resolve("os-browserify/browser"),
         "path": require.resolve("path-browserify"),
         "http": require.resolve("stream-http")
-      }
-    }};
+    }
+  }
+};
       }
     }};
