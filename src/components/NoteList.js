@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { getCollection } from '../mongodb';
 import JobSelector from './JobSelector';
-import logger from '../logger';
 
 const NoteList = ({ notes, sites, ...props }) => {
   const [filterJob, setFilterJob] = useState('');

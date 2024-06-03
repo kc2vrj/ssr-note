@@ -1,5 +1,4 @@
 import React, { useState } from 'react';
-import logger from '../logger';
 import { getCollection } from '../mongodb';
 
 const AdminPage = ({ techs = [], sites = [], notes = [] }) => {
@@ -9,21 +8,14 @@ const AdminPage = ({ techs = [], sites = [], notes = [] }) => {
 
   const handleAddTech = async () => {
     // Add new tech to Firestore
-    logger.info('Adding new tech...');
-    logger.info('Editing tech...');
-    logger.info('Deleting tech...');
     const techsCollection = await getCollection('techs');
     const docRef = await techsCollection.insertOne({ name: newTech });
     setNewTech('');
-    logger.info('New tech added successfully');
     return docRef;
   };
 
   const handleAddSite = async () => {
     // Add new site to Firestore
-    logger.info('Adding new site...');
-    logger.info('Editing site...');
-    logger.info('Deleting site...');
     const sitesCollection = await getCollection('sites');
     const docRef = await sitesCollection.insertOne({ name: newSite });
     setNewSite('');
@@ -32,9 +24,6 @@ const AdminPage = ({ techs = [], sites = [], notes = [] }) => {
 
   const handleAddNote = async () => {
     // Add new note to Firestore
-    logger.info('Adding new note...');
-    logger.info('Editing note...');
-    logger.info('Deleting note...');
     const notesCollection = await getCollection('notes');
     await notesCollection.insertOne({ note: newNote });
     setNewNote('');

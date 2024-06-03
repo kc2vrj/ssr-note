@@ -34,10 +34,8 @@ app.get('*', async (req, res) => {
   );
 
   const indexFile = path.resolve(__dirname, '../build/index.html');
-  logger.info(`Request received for ${req.url}`);
   fs.readFile(indexFile, 'utf8', (err, data) => {
     if (err) {
-      logger.error('Something went wrong:', err);
       return res.status(500).send('Oops, better luck next time!');
     }
 
@@ -48,7 +46,6 @@ app.get('*', async (req, res) => {
 });
 
 app.listen(PORT, () => {
-  logger.info(`Server is listening on port ${PORT}`);
 });
 import { MongoClient } from 'mongodb';
 
