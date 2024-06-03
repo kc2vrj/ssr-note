@@ -12,11 +12,24 @@ const PORT = process.env.PORT || 3000;
 
 app.use(express.static(path.resolve(__dirname, '../build')));
 
-app.get('*', (req, res) => {
+app.get('*', async (req, res) => {
   const context = {};
+
+  // Fetch data from MongoDB
+  const db = await connectDB();
+  const techsCollection = await db.collection('techs').find().toArray();
+  const sitesCollection = await db.collection('sites').find().toArray();
+  const notesCollection = await db.collection('notes').find().toArray();
+
+  const initialData = {
+    techs: techsCollection.map(tech => tech.name),
+    sites: sitesCollection.map(site => site.name),
+    notes: notesCollection
+  };
+
   const reactComponent = ReactDOMServer.renderToString(
     <StaticRouter location={req.url} context={context}>
-      <App />
+      <App initialData={initialData} />
     </StaticRouter>
   );
 

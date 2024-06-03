@@ -1,7 +1,8 @@
 import React, { useState } from 'react';
 import logger from '../logger';
+import { getCollection } from '../mongodb';
 
-const AdminPage = ({ techs, sites, notes }) => {
+const AdminPage = ({ techs = [], sites = [], notes = [] }) => {
   const [newTech, setNewTech] = useState('');
   const [newSite, setNewSite] = useState('');
   const [newNote, setNewNote] = useState('');
@@ -86,13 +87,17 @@ const AdminPage = ({ techs, sites, notes }) => {
         <input value={newTech} onChange={(e) => setNewTech(e.target.value)} />
         <button onClick={handleAddTech}>Add Tech</button>
         <ul>
-          {techs.map((tech, index) => (
-            <li key={index}>
-              {tech}
-              <button onClick={() => handleEditTech(tech)}>Edit</button>
-              <button onClick={() => handleDeleteTech(tech)}>Delete</button>
-            </li>
-          ))}
+          {techs && techs.length > 0 ? (
+            techs.map((tech, index) => (
+              <li key={index}>
+                {tech}
+                <button onClick={() => handleEditTech(tech)}>Edit</button>
+                <button onClick={() => handleDeleteTech(tech)}>Delete</button>
+              </li>
+            ))
+          ) : (
+            <li>No technicians found</li>
+          )}
         </ul>
       </div>
       <div>
@@ -100,13 +105,17 @@ const AdminPage = ({ techs, sites, notes }) => {
         <input value={newSite} onChange={(e) => setNewSite(e.target.value)} />
         <button onClick={handleAddSite}>Add Site</button>
         <ul>
-          {sites.map((site, index) => (
-            <li key={index}>
-              {site}
-              <button onClick={() => handleEditSite(site)}>Edit</button>
-              <button onClick={() => handleDeleteSite(site)}>Delete</button>
-            </li>
-          ))}
+          {sites && sites.length > 0 ? (
+            sites.map((site, index) => (
+              <li key={index}>
+                {site}
+                <button onClick={() => handleEditSite(site)}>Edit</button>
+                <button onClick={() => handleDeleteSite(site)}>Delete</button>
+              </li>
+            ))
+          ) : (
+            <li>No sites found</li>
+          )}
         </ul>
       </div>
       <div>
@@ -114,16 +123,20 @@ const AdminPage = ({ techs, sites, notes }) => {
         <input value={newNote} onChange={(e) => setNewNote(e.target.value)} />
         <button onClick={handleAddNote}>Add Note</button>
         <ul>
-          {notes.map((note) => (
-            <li key={note.id}>
-              <p>Note: {note.note}</p>
-              <p>Job: {note.job}</p>
-              <p>Tech: {note.tech}</p>
-              <p>Timestamp: {new Date(note.timestamp).toLocaleString()}</p>
-              <button onClick={() => handleEditNote(note)}>Edit</button>
-              <button onClick={() => handleDeleteNote(note)}>Delete</button>
-            </li>
-          ))}
+          {notes && notes.length > 0 ? (
+            notes.map((note) => (
+              <li key={note.id}>
+                <p>Note: {note.note}</p>
+                <p>Job: {note.job}</p>
+                <p>Tech: {note.tech}</p>
+                <p>Timestamp: {new Date(note.timestamp).toLocaleString()}</p>
+                <button onClick={() => handleEditNote(note)}>Edit</button>
+                <button onClick={() => handleDeleteNote(note)}>Delete</button>
+              </li>
+            ))
+          ) : (
+            <li>No notes found</li>
+          )}
         </ul>
       </div>
     </div>
