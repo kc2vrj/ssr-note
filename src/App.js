@@ -1,12 +1,13 @@
 import React from 'react';
-import { BrowserRouter as Router, Routes, Route, Link } from 'react-router-dom';
+import { Routes, Route, Link } from 'react-router-dom';
+import { BrowserRouter, StaticRouter } from 'react-router-dom/server';
 import NoteForm from './components/NoteForm';
 import NoteList from './components/NoteList';
 import AdminPage from './components/AdminPage';
 
 const App = (props) => {
   return (
-    <Router>
+    const Router = typeof window !== 'undefined' ? BrowserRouter : StaticRouter;
       <div className="container">
         <h1><img src="https://stratfiresecurity.com/wp-content/uploads/2021/11/logo.png" alt="Logo" style={{height:"50px"}} /> Note Taking App</h1>
         <nav>
