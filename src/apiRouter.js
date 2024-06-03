@@ -1,10 +1,16 @@
 import express from 'express';
+import fs from 'fs';
+import path from 'path';
 import { getCollection } from './mongoUtils';
+
+const logStream = fs.createWriteStream(path.join(__dirname, 'url.log'), { flags: 'a' });
 
 const router = express.Router();
 
 router.use((req, res, next) => {
-  console.log(`Received request to ${req.path}`);
+  const logMessage = `Received request to ${req.path}\n`;
+  logStream.write(logMessage);
+  console.log(logMessage.trim());
   next();
 });
 
