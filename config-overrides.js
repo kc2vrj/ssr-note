@@ -14,6 +14,13 @@ module.exports = function override(config, env) {
     "timers": require.resolve("timers-browserify"),
     "http": require.resolve("stream-http"),
     "fs": require.resolve("fs-browser"), // Use the polyfill
+    "net": require.resolve("net-browserify"),
+    "tls": require.resolve("tls-browserify"),
+    "child_process": false,
+    "dns": require.resolve("dns-browserify"),
+    "timers": require.resolve("timers-browserify"),
+    "timers/promises": require.resolve("timers-browserify"),
+    "fs/promises": require.resolve("fs-browser"),
     "path": require.resolve("path-browserify"),
     "process": require.resolve("process/browser"),
     "vm": require.resolve("vm-browserify")
