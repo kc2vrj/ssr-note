@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { db } from '../firebase';
+import { getCollection } from '../mongodb';
 import JobSelector from './JobSelector';
 import TechSelector from './TechSelector';
 
@@ -11,7 +11,8 @@ const NoteForm = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     // Add form data to Firebase
-    await db.collection('notes').add({
+    const notesCollection = await getCollection('notes');
+    await notesCollection.insertOne({
       note,
       job: selectedJob,
       tech: selectedTech,

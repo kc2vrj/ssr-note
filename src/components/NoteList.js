@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { db } from '../firebase';
+import { getCollection } from '../mongodb';
 import JobSelector from './JobSelector';
 
 const NoteList = (props) => {
@@ -8,17 +8,9 @@ const NoteList = (props) => {
 
   useEffect(() => {
     const fetchNotes = async () => {
-      let query = db.collection('notes');
-
-      if (filterJob) {
-        query = query.where('job', '==', filterJob);
-      }
-
-      const snapshot = await query.get();
-      const notesData = snapshot.docs.map((doc) => ({
-        id: doc.id,
-        ...doc.data(),
-      }));
+      const notesCollection = await getCollection('notes');
+      const query = filterJob ? { job: filterJob } : {};
+      const notesData = await notesCollection.find(query).toArray();
       setNotes(notesData);
     };
 
