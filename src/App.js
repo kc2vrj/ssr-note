@@ -1,6 +1,7 @@
 import React from 'react';
 import { Routes, Route, Link } from 'react-router-dom';
-import { BrowserRouter, StaticRouter } from 'react-router-dom/server';
+import { BrowserRouter } from 'react-router-dom';
+import { StaticRouter } from 'react-router-dom/server';
 import NoteForm from './components/NoteForm';
 import NoteList from './components/NoteList';
 import AdminPage from './components/AdminPage';
