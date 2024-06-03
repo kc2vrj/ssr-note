@@ -1,16 +1,17 @@
 import React, { useState, useEffect } from 'react';
-import { techsCollection } from '../firebase';
+import { getCollection } from '../mongodb';
 
 const TechSelector = ({ selectedTech, setTech }) => {
   const [techs, setTechs] = useState([]);
 
   useEffect(() => {
-    const unsubscribe = techsCollection.onSnapshot((snapshot) => {
-      const techsData = snapshot.docs.map((doc) => doc.data().name);
-      setTechs(techsData);
-    });
+    const fetchTechs = async () => {
+      const techsCollection = await getCollection('techs');
+      const techsData = await techsCollection.find().toArray();
+      setTechs(techsData.map(tech => tech.name));
+    };
 
-    return unsubscribe;
+    fetchTechs();
   }, []);
 
   const handleTechChange = (e) => {
