@@ -3,7 +3,7 @@ import { getCollection } from '../mongodb';
 import JobSelector from './JobSelector';
 import logger from '../logger';
 
-const NoteList = ({ notes, ...props }) => {
+const NoteList = ({ notes, sites, ...props }) => {
   const [filterJob, setFilterJob] = useState('');
 
   return (

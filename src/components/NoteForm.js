@@ -4,7 +4,7 @@ import JobSelector from './JobSelector';
 import logger from '../logger';
 import TechSelector from './TechSelector';
 
-const NoteForm = () => {
+const NoteForm = ({ sites }) => {
   const [note, setNote] = useState('');
   const [selectedJob, setSelectedJob] = useState('');
   const [selectedTech, setSelectedTech] = useState('');

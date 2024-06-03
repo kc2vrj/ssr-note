@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { getCollection } from '../mongodb';
 
-const JobSelector = ({ selectedJob, setJob, sites }) => {
+const JobSelector = ({ selectedJob, setJob, sites = [] }) => {
 
   const handleJobChange = (e) => {
     setJob(e.target.value);

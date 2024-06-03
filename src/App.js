@@ -30,8 +30,8 @@ const App = ({ initialData, ...props }) => {
       </nav>
 
       <Routes>
-        <Route path="/" element={<NoteForm {...props} />} />
-        <Route path="/notes" element={<NoteList {...props} />} />
+        <Route path="/" element={<NoteForm sites={props.sites} {...props} />} />
+        <Route path="/notes" element={<NoteList sites={props.sites} {...props} />} />
         <Route path="/admin" element={<AdminPage {...props} />} />
       </Routes>
     </div>
