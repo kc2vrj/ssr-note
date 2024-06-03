@@ -8,11 +8,10 @@ import App from './App';
 import { getCollection } from './mongodb';
 import { connectToMongo } from './mongoUtils';
 
-
 const app = express();
 const PORT = process.env.PORT || 3000;
 
-  // Connect to MongoDB
+// Connect to MongoDB
 await connectToMongo();
 
 app.use(express.static(path.resolve(__dirname, '../build')));
@@ -22,8 +21,8 @@ app.use(express.json());
 app.post('/api/techs', async (req, res) => {
   const { name } = req.body;
   try {
-    const db = await connectDB();
-    await db.collection('techs').insertOne({ name });
+    const db = await getCollection('techs');
+    await db.insertOne({ name });
     res.status(201).send('Tech added');
   } catch (error) {
     res.status(500).send('Failed to add tech');
@@ -33,8 +32,8 @@ app.post('/api/techs', async (req, res) => {
 app.post('/api/sites', async (req, res) => {
   const { name } = req.body;
   try {
-    const db = await connectDB();
-    await db.collection('sites').insertOne({ name });
+    const db = await getCollection('sites');
+    await db.insertOne({ name });
     res.status(201).send('Site added');
   } catch (error) {
     res.status(500).send('Failed to add site');
@@ -44,8 +43,8 @@ app.post('/api/sites', async (req, res) => {
 app.post('/api/notes', async (req, res) => {
   const { note, job, tech, timestamp } = req.body;
   try {
-    const db = await connectDB();
-    await db.collection('notes').insertOne({ note, job, tech, timestamp });
+    const db = await getCollection('notes');
+    await db.insertOne({ note, job, tech, timestamp });
     res.status(201).send('Note added');
   } catch (error) {
     res.status(500).send('Failed to add note');
@@ -55,12 +54,10 @@ app.post('/api/notes', async (req, res) => {
 app.get('*', async (req, res) => {
   const context = {};
 
-
   // Fetch data from MongoDB
-  const db = await connectDB();
-  const techsCollection = await db.collection('techs').find().toArray();
-  const sitesCollection = await db.collection('sites').find().toArray();
-  const notesCollection = await db.collection('notes').find().toArray();
+  const techsCollection = await getCollection('techs').find().toArray();
+  const sitesCollection = await getCollection('sites').find().toArray();
+  const notesCollection = await getCollection('notes').find().toArray();
 
   const initialData = {
     techs: techsCollection.map(tech => tech.name),
@@ -87,25 +84,5 @@ app.get('*', async (req, res) => {
 });
 
 app.listen(PORT, () => {
+  console.log(`Server is listening on port ${PORT}`);
 });
-import { MongoClient } from 'mongodb';
-
-const uri = 'your_mongodb_connection_string';
-const client = new MongoClient(uri, { useNewUrlParser: true, useUnifiedTopology: true });
-
-let db;
-
-const connectDB = async () => {
-  if (!db) {
-    await client.connect();
-    db = client.db('note-taking-app');
-  }
-  return db;
-};
-
-const getCollection = async (collectionName) => {
-  const database = await connectDB();
-  return database.collection(collectionName);
-};
-
-export { getCollection };
