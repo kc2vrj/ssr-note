@@ -12,9 +12,13 @@ const logger = createLogger({
     logFormat
   ),
   transports: [
-    new transports.Console(),
-    new transports.File({ filename: './app.log' })
+    new transports.Console()
   ],
 });
+
+// Add File transport only in server environment
+if (typeof window === 'undefined') {
+  logger.add(new transports.File({ filename: './app.log' }));
+}
 
 module.exports = logger;
