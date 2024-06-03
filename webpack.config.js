@@ -16,10 +16,10 @@ module.exports = {
       "path": require.resolve("path-browserify"),
       "querystring": require.resolve("querystring-es3"),
       "zlib": require.resolve("browserify-zlib"),
-      "fs": false,
+      "fs": require.resolve("browserify-fs"),
       "child_process": false,
-      "net": false,
-      "tls": false
+      "net": require.resolve("net-browserify"),
+      "tls": require.resolve("tls-browserify")
     }
   },
   plugins: [
