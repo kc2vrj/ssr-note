@@ -37,5 +37,11 @@ module.exports = function override(config, env) {
     use: 'null-loader'
   });
 
+  config.module.rules.push({
+    test: /\.js$/,
+    use: 'null-loader',
+    include: /node_modules\/mongodb/
+  });
+
   return config;
 }
