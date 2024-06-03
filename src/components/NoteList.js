@@ -4,33 +4,25 @@ import JobSelector from './JobSelector';
 
 const NoteList = (props) => {
   const [notes, setNotes] = useState([]);
+  const [filterJob, setFilterJob] = useState('');
 
   useEffect(() => {
-    const unsubscribe = db.collection('notes').onSnapshot((snapshot) => {
+    const fetchNotes = async () => {
+      let query = db.collection('notes');
+
+      if (filterJob) {
+        query = query.where('job', '==', filterJob);
+      }
+
+      const snapshot = await query.get();
       const notesData = snapshot.docs.map((doc) => ({
         id: doc.id,
         ...doc.data(),
       }));
       setNotes(notesData);
-    });
+    };
 
-    return unsubscribe;
-  }, []);
-  const [filterJob, setFilterJob] = useState('');
-
-  useEffect(() => {
-    const unsubscribe = db
-      .collection('notes')
-      .where('job', '==', filterJob)
-      .onSnapshot((snapshot) => {
-        const notesData = snapshot.docs.map((doc) => ({
-          id: doc.id,
-          ...doc.data(),
-        }));
-        setNotes(notesData);
-      });
-
-    return unsubscribe;
+    fetchNotes();
   }, [filterJob]);
 
   return (
