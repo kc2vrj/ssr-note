@@ -3,7 +3,7 @@ import serviceAccount from 'strat-notes-app-firebase-adminsdk-dcvx2-1962325dd1.j
 
 admin.initializeApp({
   credential: admin.credential.cert(serviceAccount),
-  databaseURL: https://strat-notes-app-default-rtdb.firebaseio.com || 'your_database_url'
+  databaseURL: 'https://strat-notes-app-default-rtdb.firebaseio.com' || 'your_database_url'
 });
 
 const db = admin.firestore();
