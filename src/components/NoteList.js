@@ -1,5 +1,4 @@
-import React, { useState, useEffect } from 'react';
-import { getCollection } from '../mongodb';
+import React, { useState } from 'react';
 import JobSelector from './JobSelector';
 
 const NoteList = ({ notes, sites, ...props }) => {
