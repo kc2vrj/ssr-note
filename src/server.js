@@ -16,6 +16,11 @@ connectToMongo().then(() => {
   console.log('MongoDB connection established');
 });
 
+app.use((req, res, next) => {
+  console.log(`Incoming request: ${req.method} ${req.url}`);
+  next();
+});
+
 app.use(express.static(path.resolve(__dirname, '../build')));
 
 app.use(express.json());
