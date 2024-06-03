@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { getCollection } from '../mongodb';
+import logger from '../logger';
 
 const AdminPage = () => {
   const [techs, setTechs] = useState([]);
@@ -48,9 +49,7 @@ const AdminPage = () => {
     const docRef = await techsCollection.insertOne({ name: newTech });
     setNewTech('');
     logger.info('New tech added successfully');
-    logger.info('New site added successfully');
     return docRef;
-    logger.info('New note added successfully');
   };
 
   const handleAddSite = async () => {

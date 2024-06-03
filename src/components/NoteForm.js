@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { getCollection } from '../mongodb';
 import JobSelector from './JobSelector';
+import logger from '../logger';
 import TechSelector from './TechSelector';
 
 const NoteForm = () => {

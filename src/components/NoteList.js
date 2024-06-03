@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { getCollection } from '../mongodb';
 import JobSelector from './JobSelector';
+import logger from '../logger';
 
 const NoteList = (props) => {
   const [notes, setNotes] = useState([]);
