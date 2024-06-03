@@ -1,11 +1,10 @@
 import React from 'react';
-import ReactDOM from 'react-dom';
-// Remove BrowserRouter import
+import ReactDOM from 'react-dom/client';
 import App from './App';
 
-const initialProps = window.__INITIAL_PROPS__ || {};
-
-ReactDOM.hydrate(
-  <App {...initialProps} />,
-  document.getElementById('root')
+const root = ReactDOM.createRoot(document.getElementById('root'));
+root.render(
+  <React.StrictMode>
+    <App />
+  </React.StrictMode>
 );
