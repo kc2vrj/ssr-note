@@ -33,23 +33,12 @@ module.exports = function override(config, env) {
   );
 
   config.module.rules.push({
-    test: /bson\.js$/,
+    test: /bson\.(js|ts)$/,
     use: 'null-loader'
   });
 
   config.module.rules.push({
-    test: /\.js$/,
-    use: 'null-loader',
-    include: /node_modules\/mongodb/
-  });
-
-  config.module.rules.push({
-    test: /bson\.ts$/,
-    use: 'null-loader'
-  });
-
-  config.module.rules.push({
-    test: /\.ts$/,
+    test: /\.(js|ts)$/,
     use: 'null-loader',
     include: /node_modules\/mongodb/
   });
