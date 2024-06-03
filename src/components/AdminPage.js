@@ -11,21 +11,27 @@ const AdminPage = () => {
 
   useEffect(() => {
     const fetchTechs = async () => {
+      logger.info('Fetching techs...');
       const techsCollection = await getCollection('techs');
       const techsData = await techsCollection.find().toArray();
       setTechs(techsData.map(tech => tech.name));
+      logger.info('Techs fetched successfully');
     };
 
     const fetchSites = async () => {
+      logger.info('Fetching sites...');
       const sitesCollection = await getCollection('sites');
       const sitesData = await sitesCollection.find().toArray();
       setSites(sitesData.map(site => site.name));
+      logger.info('Sites fetched successfully');
     };
 
     const fetchNotes = async () => {
+      logger.info('Fetching notes...');
       const notesCollection = await getCollection('notes');
       const notesData = await notesCollection.find().toArray();
       setNotes(notesData);
+      logger.info('Notes fetched successfully');
     };
 
     fetchTechs();
@@ -35,14 +41,23 @@ const AdminPage = () => {
 
   const handleAddTech = async () => {
     // Add new tech to Firestore
+    logger.info('Adding new tech...');
+    logger.info('Editing tech...');
+    logger.info('Deleting tech...');
     const techsCollection = await getCollection('techs');
     const docRef = await techsCollection.insertOne({ name: newTech });
     setNewTech('');
+    logger.info('New tech added successfully');
+    logger.info('New site added successfully');
     return docRef;
+    logger.info('New note added successfully');
   };
 
   const handleAddSite = async () => {
     // Add new site to Firestore
+    logger.info('Adding new site...');
+    logger.info('Editing site...');
+    logger.info('Deleting site...');
     const sitesCollection = await getCollection('sites');
     const docRef = await sitesCollection.insertOne({ name: newSite });
     setNewSite('');
@@ -51,6 +66,9 @@ const AdminPage = () => {
 
   const handleAddNote = async () => {
     // Add new note to Firestore
+    logger.info('Adding new note...');
+    logger.info('Editing note...');
+    logger.info('Deleting note...');
     const notesCollection = await getCollection('notes');
     await notesCollection.insertOne({ note: newNote });
     setNewNote('');

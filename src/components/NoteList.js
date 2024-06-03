@@ -8,10 +8,12 @@ const NoteList = (props) => {
 
   useEffect(() => {
     const fetchNotes = async () => {
+      logger.info('Fetching notes...');
       const notesCollection = await getCollection('notes');
       const query = filterJob ? { job: filterJob } : {};
       const notesData = await notesCollection.find(query).toArray();
       setNotes(notesData);
+      logger.info('Notes fetched successfully');
     };
 
     fetchNotes();

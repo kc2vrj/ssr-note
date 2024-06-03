@@ -5,6 +5,7 @@ import ReactDOMServer from 'react-dom/server';
 import { StaticRouter } from 'react-router-dom/server';
 import fs from 'fs';
 import App from './App';
+import logger from './logger';
 
 const app = express();
 const PORT = process.env.PORT || 3000;
@@ -20,9 +21,10 @@ app.get('*', (req, res) => {
   );
 
   const indexFile = path.resolve(__dirname, '../build/index.html');
+  logger.info(`Request received for ${req.url}`);
   fs.readFile(indexFile, 'utf8', (err, data) => {
     if (err) {
-      console.error('Something went wrong:', err);
+      logger.error('Something went wrong:', err);
       return res.status(500).send('Oops, better luck next time!');
     }
 
@@ -33,7 +35,7 @@ app.get('*', (req, res) => {
 });
 
 app.listen(PORT, () => {
-  console.log(`Server is listening on port ${PORT}`);
+  logger.info(`Server is listening on port ${PORT}`);
 });
 import { MongoClient } from 'mongodb';
 

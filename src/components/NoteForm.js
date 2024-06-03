@@ -12,12 +12,14 @@ const NoteForm = () => {
     e.preventDefault();
     // Add form data to Firebase
     const notesCollection = await getCollection('notes');
+    logger.info('Inserting new note...');
     await notesCollection.insertOne({
       note,
       job: selectedJob,
       tech: selectedTech,
       timestamp: new Date().toISOString()
     });
+    logger.info('Note inserted successfully');
     setNote('');
     setSelectedJob('');
     setSelectedTech('');
