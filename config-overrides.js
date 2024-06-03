@@ -17,7 +17,6 @@ module.exports = function override(config, env) {
     "net": require.resolve("node-libs-browser/mock/net"),
     "tls": require.resolve("node-libs-browser/mock/tls"),
     "child_process": false,
-    "dns": require.resolve("dns-browserify"),
     "timers": require.resolve("timers-browserify"),
     "timers/promises": require.resolve("timers-browserify"),
     "fs/promises": require.resolve("fs-browser"),
