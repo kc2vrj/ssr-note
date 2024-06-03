@@ -5,7 +5,7 @@ import ReactDOMServer from 'react-dom/server';
 import { StaticRouter } from 'react-router-dom/server';
 import fs from 'fs';
 import App from './App';
-import { getCollection } from './mongodb';
+import apiRouter from './apiRouter';
 import { connectToMongo } from './mongoUtils';
 
 const app = express();
@@ -20,39 +20,7 @@ app.use(express.static(path.resolve(__dirname, '../build')));
 
 app.use(express.json());
 
-app.post('/api/techs', async (req, res) => {
-  console.log('Received request to /api/techs');
-  const { name } = req.body;
-  try {
-    const db = await getCollection('techs');
-    await db.insertOne({ name });
-    res.status(201).send('Tech added');
-  } catch (error) {
-    res.status(500).send('Failed to add tech');
-  }
-});
-
-app.post('/api/sites', async (req, res) => {
-  const { name } = req.body;
-  try {
-    const db = await getCollection('sites');
-    await db.insertOne({ name });
-    res.status(201).send('Site added');
-  } catch (error) {
-    res.status(500).send('Failed to add site');
-  }
-});
-
-app.post('/api/notes', async (req, res) => {
-  const { note, job, tech, timestamp } = req.body;
-  try {
-    const db = await getCollection('notes');
-    await db.insertOne({ note, job, tech, timestamp });
-    res.status(201).send('Note added');
-  } catch (error) {
-    res.status(500).send('Failed to add note');
-  }
-});
+app.use('/api', apiRouter);
 
 app.get('*', async (req, res) => {
   const context = {};
