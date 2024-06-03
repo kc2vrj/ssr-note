@@ -56,7 +56,6 @@ const AdminPage = () => {
     fetchSites();
     fetchNotes();
   }, []);
-  }, []);
 
   const handleAddTech = async () => {
     // Add new tech to Firestore
