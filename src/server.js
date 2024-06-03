@@ -4,6 +4,7 @@ import React from 'react';
 import ReactDOMServer from 'react-dom/server';
 import { StaticRouter } from 'react-router-dom/server';
 import fs from 'fs';
+import fs from 'fs';
 import App from './App';
 import apiRouter from './apiRouter';
 import { connectToMongo, getCollection } from './mongoUtils';
@@ -16,8 +17,12 @@ connectToMongo().then(() => {
   console.log('MongoDB connection established');
 });
 
+const logStream = fs.createWriteStream(path.join(__dirname, 'url.log'), { flags: 'a' });
+
 app.use((req, res, next) => {
-  console.log(`Incoming request: ${req.method} ${req.url}`);
+  const logMessage = `Incoming request: ${req.method} ${req.url}\n`;
+  logStream.write(logMessage);
+  console.log(logMessage.trim());
   next();
 });
 
