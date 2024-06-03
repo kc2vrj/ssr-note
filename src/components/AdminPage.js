@@ -1,8 +1,10 @@
-import React, { useState, useEffect } from 'react';
-import { getCollection } from '../mongodb';
+import React, { useState } from 'react';
 import logger from '../logger';
 
 const AdminPage = ({ techs, sites, notes }) => {
+  const [newTech, setNewTech] = useState('');
+  const [newSite, setNewSite] = useState('');
+  const [newNote, setNewNote] = useState('');
 
   const handleAddTech = async () => {
     // Add new tech to Firestore
