@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { techsCollection, sitesCollection, db } from '../firebase';
+import { getCollection } from '../mongodb';
 
 const AdminPage = () => {
   const [techs, setTechs] = useState([]);
@@ -10,85 +10,90 @@ const AdminPage = () => {
   const [newNote, setNewNote] = useState('');
 
   useEffect(() => {
-    const unsubscribeTechs = techsCollection.onSnapshot((snapshot) => {
-      const techsData = snapshot.docs.map((doc) => doc.data().name);
-      setTechs(techsData);
-    });
+    const fetchTechs = async () => {
+      const techsCollection = await getCollection('techs');
+      const techsData = await techsCollection.find().toArray();
+      setTechs(techsData.map(tech => tech.name));
+    };
 
-    const unsubscribeSites = sitesCollection.onSnapshot((snapshot) => {
-      const sitesData = snapshot.docs.map((doc) => doc.data().name);
-      setSites(sitesData);
-    });
+    const fetchSites = async () => {
+      const sitesCollection = await getCollection('sites');
+      const sitesData = await sitesCollection.find().toArray();
+      setSites(sitesData.map(site => site.name));
+    };
 
-    const unsubscribeNotes = db.collection('notes').onSnapshot((snapshot) => {
-      const notesData = snapshot.docs.map((doc) => ({ id: doc.id, ...doc.data() }));
+    const fetchNotes = async () => {
+      const notesCollection = await getCollection('notes');
+      const notesData = await notesCollection.find().toArray();
       setNotes(notesData);
-    });
+    };
 
-    return () => {
-      unsubscribeTechs();
-      unsubscribeSites();
-      unsubscribeNotes();
+    fetchTechs();
+    fetchSites();
+    fetchNotes();
     };
   }, []);
 
   const handleAddTech = async () => {
     // Add new tech to Firestore
-    const docRef = await techsCollection.add({ name: newTech });
+    const techsCollection = await getCollection('techs');
+    const docRef = await techsCollection.insertOne({ name: newTech });
     setNewTech('');
     return docRef;
   };
 
   const handleAddSite = async () => {
     // Add new site to Firestore
-    const docRef = await sitesCollection.add({ name: newSite });
+    const sitesCollection = await getCollection('sites');
+    const docRef = await sitesCollection.insertOne({ name: newSite });
     setNewSite('');
     return docRef;
   };
 
   const handleAddNote = async () => {
     // Add new note to Firestore
-    await db.collection('notes').add({ note: newNote });
+    const notesCollection = await getCollection('notes');
+    await notesCollection.insertOne({ note: newNote });
     setNewNote('');
   };
 
   const handleEditTech = async (tech) => {
     // Edit tech in Firestore
-    const techRef = techsCollection.doc(tech);
-    await techRef.update({ name: newTech });
+    const techsCollection = await getCollection('techs');
+    await techsCollection.updateOne({ name: tech }, { $set: { name: newTech } });
     setNewTech('');
   };
 
   const handleDeleteTech = async (tech) => {
     // Delete tech from Firestore
-    const techRef = techsCollection.doc(tech);
-    await techRef.delete();
+    const techsCollection = await getCollection('techs');
+    await techsCollection.deleteOne({ name: tech });
   };
 
   const handleEditSite = async (site) => {
     // Edit site in Firestore
-    const siteRef = sitesCollection.doc(site);
-    await siteRef.update({ name: newSite });
+    const sitesCollection = await getCollection('sites');
+    await sitesCollection.updateOne({ name: site }, { $set: { name: newSite } });
     setNewSite('');
   };
 
   const handleDeleteSite = async (site) => {
     // Delete site from Firestore
-    const siteRef = sitesCollection.doc(site);
-    await siteRef.delete();
+    const sitesCollection = await getCollection('sites');
+    await sitesCollection.deleteOne({ name: site });
   };
 
   const handleEditNote = async (note) => {
     // Edit note in Firestore
-    const noteRef = db.collection('notes').doc(note.id);
-    await noteRef.update({ note: newNote });
+    const notesCollection = await getCollection('notes');
+    await notesCollection.updateOne({ _id: note.id }, { $set: { note: newNote } });
     setNewNote('');
   };
 
   const handleDeleteNote = async (note) => {
     // Delete note from Firestore
-    const noteRef = db.collection('notes').doc(note.id);
-    await noteRef.delete();
+    const notesCollection = await getCollection('notes');
+    await notesCollection.deleteOne({ _id: note.id });
   };
 
   return (
