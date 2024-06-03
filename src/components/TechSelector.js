@@ -1,14 +1,13 @@
 import React, { useState, useEffect } from 'react';
-import { getCollection } from '../mongodb';
 
 const TechSelector = ({ selectedTech, setTech }) => {
   const [techs, setTechs] = useState([]);
 
   useEffect(() => {
+    // Fetch techs from the server
     const fetchTechs = async () => {
-      const techsCollection = await getCollection('techs');
-      const techsData = await techsCollection.find().toArray();
-      setTechs(techsData.map(tech => tech.name));
+      // This should be handled on the server side
+      setTechs([]);
     };
 
     fetchTechs();

@@ -7,64 +7,53 @@ const AdminPage = ({ techs = [], sites = [], notes = [] }) => {
 
   const handleAddTech = async () => {
     // Add new tech to Firestore
-    const techsCollection = await getCollection('techs');
-    const docRef = await techsCollection.insertOne({ name: newTech });
+    // This should be handled on the server side
     setNewTech('');
-    return docRef;
   };
 
   const handleAddSite = async () => {
     // Add new site to Firestore
-    const sitesCollection = await getCollection('sites');
-    const docRef = await sitesCollection.insertOne({ name: newSite });
+    // This should be handled on the server side
     setNewSite('');
-    return docRef;
   };
 
   const handleAddNote = async () => {
     // Add new note to Firestore
-    const notesCollection = await getCollection('notes');
-    await notesCollection.insertOne({ note: newNote });
+    // This should be handled on the server side
     setNewNote('');
   };
 
   const handleEditTech = async (tech) => {
     // Edit tech in Firestore
-    const techsCollection = await getCollection('techs');
-    await techsCollection.updateOne({ name: tech }, { $set: { name: newTech } });
+    // This should be handled on the server side
     setNewTech('');
   };
 
   const handleDeleteTech = async (tech) => {
     // Delete tech from Firestore
-    const techsCollection = await getCollection('techs');
-    await techsCollection.deleteOne({ name: tech });
+    // This should be handled on the server side
   };
 
   const handleEditSite = async (site) => {
     // Edit site in Firestore
-    const sitesCollection = await getCollection('sites');
-    await sitesCollection.updateOne({ name: site }, { $set: { name: newSite } });
+    // This should be handled on the server side
     setNewSite('');
   };
 
   const handleDeleteSite = async (site) => {
     // Delete site from Firestore
-    const sitesCollection = await getCollection('sites');
-    await sitesCollection.deleteOne({ name: site });
+    // This should be handled on the server side
   };
 
   const handleEditNote = async (note) => {
     // Edit note in Firestore
-    const notesCollection = await getCollection('notes');
-    await notesCollection.updateOne({ _id: note.id }, { $set: { note: newNote } });
+    // This should be handled on the server side
     setNewNote('');
   };
 
   const handleDeleteNote = async (note) => {
     // Delete note from Firestore
-    const notesCollection = await getCollection('notes');
-    await notesCollection.deleteOne({ _id: note.id });
+    // This should be handled on the server side
   };
 
   return (

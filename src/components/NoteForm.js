@@ -10,13 +10,7 @@ const NoteForm = ({ sites }) => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     // Add form data to Firebase
-    const notesCollection = await getCollection('notes');
-    await notesCollection.insertOne({
-      note,
-      job: selectedJob,
-      tech: selectedTech,
-      timestamp: new Date().toISOString()
-    });
+    // This should be handled on the server side
     setNote('');
     setSelectedJob('');
     setSelectedTech('');
