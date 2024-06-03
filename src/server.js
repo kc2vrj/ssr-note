@@ -42,8 +42,8 @@ app.get('/admin', (req, res) => {
 app.listen(PORT, () => {
   console.log(`Server is listening on port ${PORT}`);
 });
-const admin = require('firebase-admin');
-const serviceAccount = require('./path/to/serviceAccountKey.json');
+import admin from 'firebase-admin';
+import serviceAccount from './path/to/serviceAccountKey.json';
 
 admin.initializeApp({
   credential: admin.credential.cert(serviceAccount),
@@ -53,4 +53,4 @@ admin.initializeApp({
 const db = admin.firestore();
 
 // Export the db object for use in other server-side files
-module.exports = { db };
+export { db };
