@@ -2,43 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { getCollection } from '../mongodb';
 import logger from '../logger';
 
-const AdminPage = () => {
-  const [techs, setTechs] = useState([]);
-  const [sites, setSites] = useState([]);
-  const [notes, setNotes] = useState([]);
-  const [newTech, setNewTech] = useState('');
-  const [newSite, setNewSite] = useState('');
-  const [newNote, setNewNote] = useState('');
-
-  useEffect(() => {
-    const fetchTechs = async () => {
-      logger.info('Fetching techs...');
-      const techsCollection = await getCollection('techs');
-      const techsData = await techsCollection.find().toArray();
-      setTechs(techsData.map(tech => tech.name));
-      logger.info('Techs fetched successfully');
-    };
-
-    const fetchSites = async () => {
-      logger.info('Fetching sites...');
-      const sitesCollection = await getCollection('sites');
-      const sitesData = await sitesCollection.find().toArray();
-      setSites(sitesData.map(site => site.name));
-      logger.info('Sites fetched successfully');
-    };
-
-    const fetchNotes = async () => {
-      logger.info('Fetching notes...');
-      const notesCollection = await getCollection('notes');
-      const notesData = await notesCollection.find().toArray();
-      setNotes(notesData);
-      logger.info('Notes fetched successfully');
-    };
-
-    fetchTechs();
-    fetchSites();
-    fetchNotes();
-  }, []);
+const AdminPage = ({ techs, sites, notes }) => {
 
   const handleAddTech = async () => {
     // Add new tech to Firestore
