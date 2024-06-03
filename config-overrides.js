@@ -35,3 +35,17 @@ module.exports = function override(config, env) {
 
   return config;
 };
+
+
+const webpack = require('webpack');
+
+module.exports = function override(config, env) {
+  // ... (your existing config)
+
+  config.module.rules.push({
+    test: /bson\.js$/,
+    use: 'null-loader'
+  });
+
+  return config;
+}
