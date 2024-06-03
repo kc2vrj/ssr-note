@@ -4,7 +4,7 @@ import NoteForm from './components/NoteForm';
 import NoteList from './components/NoteList';
 import AdminPage from './components/AdminPage';
 
-const App = (props) => {
+const App = ({ initialData, ...props }) => {
   return (
     <div className="container">
       <h1>
