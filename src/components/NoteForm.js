@@ -9,8 +9,28 @@ const NoteForm = ({ sites }) => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    // Add form data to Firebase
-    // This should be handled on the server side
+    // Send form data to the server
+    const response = await fetch('/api/notes', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        note,
+        job: selectedJob,
+        tech: selectedTech,
+        timestamp: new Date().toISOString(),
+      }),
+    });
+
+    if (response.ok) {
+      // Clear the form
+      setNote('');
+      setSelectedJob('');
+      setSelectedTech('');
+    } else {
+      console.error('Failed to add note');
+    }
     setNote('');
     setSelectedJob('');
     setSelectedTech('');

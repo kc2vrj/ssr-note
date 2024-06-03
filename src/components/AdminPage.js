@@ -7,9 +7,20 @@ const AdminPage = ({ techs = [], sites = [], notes = [] }) => {
 
   const handleAddTech = async () => {
     try {
-      // Add new tech to Firestore
-      // This should be handled on the server side
-      setNewTech('');
+      // Send new tech to the server
+      const response = await fetch('/api/techs', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ name: newTech }),
+      });
+
+      if (response.ok) {
+        setNewTech('');
+      } else {
+        console.error('Failed to add tech');
+      }
     } catch (error) {
       console.error('Error adding tech:', error);
     }
@@ -17,9 +28,20 @@ const AdminPage = ({ techs = [], sites = [], notes = [] }) => {
 
   const handleAddSite = async () => {
     try {
-      // Add new site to Firestore
-      // This should be handled on the server side
-      setNewSite('');
+      // Send new site to the server
+      const response = await fetch('/api/sites', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ name: newSite }),
+      });
+
+      if (response.ok) {
+        setNewSite('');
+      } else {
+        console.error('Failed to add site');
+      }
     } catch (error) {
       console.error('Error adding site:', error);
     }
@@ -27,9 +49,20 @@ const AdminPage = ({ techs = [], sites = [], notes = [] }) => {
 
   const handleAddNote = async () => {
     try {
-      // Add new note to Firestore
-      // This should be handled on the server side
-      setNewNote('');
+      // Send new note to the server
+      const response = await fetch('/api/notes', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ note: newNote }),
+      });
+
+      if (response.ok) {
+        setNewNote('');
+      } else {
+        console.error('Failed to add note');
+      }
     } catch (error) {
       console.error('Error adding note:', error);
     }

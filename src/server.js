@@ -17,6 +17,41 @@ await connectToMongo();
 
 app.use(express.static(path.resolve(__dirname, '../build')));
 
+app.use(express.json());
+
+app.post('/api/techs', async (req, res) => {
+  const { name } = req.body;
+  try {
+    const db = await connectDB();
+    await db.collection('techs').insertOne({ name });
+    res.status(201).send('Tech added');
+  } catch (error) {
+    res.status(500).send('Failed to add tech');
+  }
+});
+
+app.post('/api/sites', async (req, res) => {
+  const { name } = req.body;
+  try {
+    const db = await connectDB();
+    await db.collection('sites').insertOne({ name });
+    res.status(201).send('Site added');
+  } catch (error) {
+    res.status(500).send('Failed to add site');
+  }
+});
+
+app.post('/api/notes', async (req, res) => {
+  const { note, job, tech, timestamp } = req.body;
+  try {
+    const db = await connectDB();
+    await db.collection('notes').insertOne({ note, job, tech, timestamp });
+    res.status(201).send('Note added');
+  } catch (error) {
+    res.status(500).send('Failed to add note');
+  }
+});
+
 app.get('*', async (req, res) => {
   const context = {};
 
