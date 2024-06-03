@@ -6,14 +6,20 @@ import { StaticRouter } from 'react-router-dom/server';
 import fs from 'fs';
 import App from './App';
 import { getCollection } from './mongodb';
+import { connectToMongo } from './mongoUtils';
+
 
 const app = express();
 const PORT = process.env.PORT || 3000;
+
+  // Connect to MongoDB
+await connectToMongo();
 
 app.use(express.static(path.resolve(__dirname, '../build')));
 
 app.get('*', async (req, res) => {
   const context = {};
+
 
   // Fetch data from MongoDB
   const db = await connectDB();

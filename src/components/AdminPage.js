@@ -6,54 +6,90 @@ const AdminPage = ({ techs = [], sites = [], notes = [] }) => {
   const [newNote, setNewNote] = useState('');
 
   const handleAddTech = async () => {
-    // Add new tech to Firestore
-    // This should be handled on the server side
-    setNewTech('');
+    try {
+      // Add new tech to Firestore
+      // This should be handled on the server side
+      setNewTech('');
+    } catch (error) {
+      console.error('Error adding tech:', error);
+    }
   };
 
   const handleAddSite = async () => {
-    // Add new site to Firestore
-    // This should be handled on the server side
-    setNewSite('');
+    try {
+      // Add new site to Firestore
+      // This should be handled on the server side
+      setNewSite('');
+    } catch (error) {
+      console.error('Error adding site:', error);
+    }
   };
 
   const handleAddNote = async () => {
-    // Add new note to Firestore
-    // This should be handled on the server side
-    setNewNote('');
+    try {
+      // Add new note to Firestore
+      // This should be handled on the server side
+      setNewNote('');
+    } catch (error) {
+      console.error('Error adding note:', error);
+    }
   };
 
   const handleEditTech = async (tech) => {
-    // Edit tech in Firestore
-    // This should be handled on the server side
-    setNewTech('');
+    try {
+      // Edit tech in Firestore
+      // This should be handled on the server side
+      setNewTech('');
+    } catch (error) {
+      console.error('Error editing tech:', error);
+    }
   };
 
   const handleDeleteTech = async (tech) => {
-    // Delete tech from Firestore
-    // This should be handled on the server side
+    try {
+      // Delete tech from Firestore
+      // This should be handled on the server side
+    } catch (error) {
+      console.error('Error deleting tech:', error);
+    }
   };
 
   const handleEditSite = async (site) => {
-    // Edit site in Firestore
-    // This should be handled on the server side
-    setNewSite('');
+    try {
+      // Edit site in Firestore
+      // This should be handled on the server side
+      setNewSite('');
+    } catch (error) {
+      console.error('Error editing site:', error);
+    }
   };
 
   const handleDeleteSite = async (site) => {
-    // Delete site from Firestore
-    // This should be handled on the server side
+    try {
+      // Delete site from Firestore
+      // This should be handled on the server side
+    } catch (error) {
+      console.error('Error deleting site:', error);
+    }
   };
 
   const handleEditNote = async (note) => {
-    // Edit note in Firestore
-    // This should be handled on the server side
-    setNewNote('');
+    try {
+      // Edit note in Firestore
+      // This should be handled on the server side
+      setNewNote('');
+    } catch (error) {
+      console.error('Error editing note:', error);
+    }
   };
 
   const handleDeleteNote = async (note) => {
-    // Delete note from Firestore
-    // This should be handled on the server side
+    try {
+      // Delete note from Firestore
+      // This should be handled on the server side
+    } catch (error) {
+      console.error('Error deleting note:', error);
+    }
   };
 
   return (
@@ -61,13 +97,17 @@ const AdminPage = ({ techs = [], sites = [], notes = [] }) => {
       <h1>Admin Page</h1>
       <div>
         <h2>Technicians</h2>
-        <input value={newTech} onChange={(e) => setNewTech(e.target.value)} />
+        <input 
+          value={newTech} 
+          onChange={(e) => setNewTech(e.target.value)} 
+          placeholder="Enter new technician name"
+        />
         <button onClick={handleAddTech}>Add Tech</button>
         <ul>
-          {techs && techs.length > 0 ? (
-            techs.map((tech, index) => (
-              <li key={index}>
-                {tech}
+          {techs.length > 0 ? (
+            techs.map((tech) => (
+              <li key={tech.id}>
+                {tech.name}
                 <button onClick={() => handleEditTech(tech)}>Edit</button>
                 <button onClick={() => handleDeleteTech(tech)}>Delete</button>
               </li>
@@ -79,13 +119,17 @@ const AdminPage = ({ techs = [], sites = [], notes = [] }) => {
       </div>
       <div>
         <h2>Sites</h2>
-        <input value={newSite} onChange={(e) => setNewSite(e.target.value)} />
+        <input 
+          value={newSite} 
+          onChange={(e) => setNewSite(e.target.value)} 
+          placeholder="Enter new site name"
+        />
         <button onClick={handleAddSite}>Add Site</button>
         <ul>
-          {sites && sites.length > 0 ? (
-            sites.map((site, index) => (
-              <li key={index}>
-                {site}
+          {sites.length > 0 ? (
+            sites.map((site) => (
+              <li key={site.id}>
+                {site.name}
                 <button onClick={() => handleEditSite(site)}>Edit</button>
                 <button onClick={() => handleDeleteSite(site)}>Delete</button>
               </li>
@@ -97,10 +141,14 @@ const AdminPage = ({ techs = [], sites = [], notes = [] }) => {
       </div>
       <div>
         <h2>Notes</h2>
-        <input value={newNote} onChange={(e) => setNewNote(e.target.value)} />
+        <input 
+          value={newNote} 
+          onChange={(e) => setNewNote(e.target.value)} 
+          placeholder="Enter new note"
+        />
         <button onClick={handleAddNote}>Add Note</button>
         <ul>
-          {notes && notes.length > 0 ? (
+          {notes.length > 0 ? (
             notes.map((note) => (
               <li key={note.id}>
                 <p>Note: {note.note}</p>
