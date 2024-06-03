@@ -10,7 +10,7 @@ const client = new MongoClient(uri, {
 });
 
 // Connect to the MongoDB cluster
-async function connectToMongo() {
+export async function connectToMongo() {
   try {
     await client.connect();
     console.log('Connected to MongoDB');

@@ -12,7 +12,9 @@ const app = express();
 const PORT = process.env.PORT || 3000;
 
 // Connect to MongoDB
-await connectToMongo();
+connectToMongo().then(() => {
+  console.log('MongoDB connection established');
+});
 
 app.use(express.static(path.resolve(__dirname, '../build')));
 
