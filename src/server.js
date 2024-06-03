@@ -21,6 +21,7 @@ app.use(express.static(path.resolve(__dirname, '../build')));
 app.use(express.json());
 
 app.post('/api/techs', async (req, res) => {
+  console.log('Received request to /api/techs');
   const { name } = req.body;
   try {
     const db = await getCollection('techs');
@@ -86,5 +87,6 @@ app.get('*', async (req, res) => {
 });
 
 app.listen(PORT, () => {
+  console.log(`Server is listening on port ${PORT}`);
   console.log(`Server is listening on port ${PORT}`);
 });
