@@ -1,15 +1,29 @@
-import admin from 'firebase-admin';
-import serviceAccount from 'strat-notes-app-firebase-adminsdk-dcvx2-1962325dd1.json';
+import firebase from 'firebase/compat/app';
+import 'firebase/compat/firestore';
 
-admin.initializeApp({
-  credential: admin.credential.cert(serviceAccount),
-  databaseURL: 'https://strat-notes-app-default-rtdb.firebaseio.com' || 'your_database_url'
+const firebaseConfig = {
+  apiKey: process.env.REACT_APP_FIREBASE_API_KEY || 'your_api_key',
+  authDomain: process.env.REACT_APP_FIREBASE_AUTH_DOMAIN || 'your_auth_domain',
+  databaseURL: process.env.REACT_APP_FIREBASE_DATABASE_URL || 'your_database_url',
+  projectId: process.env.REACT_APP_FIREBASE_PROJECT_ID || 'your_project_id',
+  storageBucket: process.env.REACT_APP_FIREBASE_STORAGE_BUCKET || 'your_storage_bucket',
+  messagingSenderId: process.env.REACT_APP_FIREBASE_MESSAGING_SENDER_ID || 'your_messaging_sender_id',
+  appId: process.env.REACT_APP_FIREBASE_APP_ID || 'your_app_id',
+};
+
+Object.keys(firebaseConfig).forEach(key => {
+  if (!firebaseConfig[key]) {
+    console.warn(`Environment variable ${key} is not defined`);
+  }
 });
 
-const db = admin.firestore();
+firebase.initializeApp(firebaseConfig);
+
+const db = firebase.firestore();
+const firebaseApp = firebase.app();
 
 // Create references to the 'techs' and 'sites' collections
 const techsCollection = db.collection('techs');
 const sitesCollection = db.collection('sites');
 
-export { db, techsCollection, sitesCollection };
+export { db, firebaseApp, techsCollection, sitesCollection };
