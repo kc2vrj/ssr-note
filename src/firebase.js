@@ -1,9 +1,9 @@
 import admin from 'firebase-admin';
-import serviceAccount from './path/to/serviceAccountKey.json';
+import serviceAccount from 'strat-notes-app-firebase-adminsdk-dcvx2-1962325dd1.json';
 
 admin.initializeApp({
   credential: admin.credential.cert(serviceAccount),
-  databaseURL: process.env.REACT_APP_FIREBASE_DATABASE_URL || 'your_database_url'
+  databaseURL: https://strat-notes-app-default-rtdb.firebaseio.com || 'your_database_url'
 });
 
 const db = admin.firestore();
