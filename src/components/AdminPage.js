@@ -55,7 +55,7 @@ const AdminPage = () => {
     fetchTechs();
     fetchSites();
     fetchNotes();
-    };
+  }, []);
   }, []);
 
   const handleAddTech = async () => {
