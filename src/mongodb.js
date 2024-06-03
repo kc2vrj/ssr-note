@@ -9,6 +9,16 @@ const connectDB = async () => {
   if (!db) {
     await client.connect();
     db = client.db('note-taking-app');
+    // Ensure the collections exist
+    const collections = await db.listCollections().toArray();
+    const collectionNames = collections.map(col => col.name);
+
+    const requiredCollections = ['techs', 'sites', 'notes'];
+    for (const collection of requiredCollections) {
+      if (!collectionNames.includes(collection)) {
+        await db.createCollection(collection);
+      }
+    }
   }
   return db;
 };
