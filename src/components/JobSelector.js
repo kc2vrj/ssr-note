@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { firebaseApp } from '../firebase';
+import { db } from '../firebase';
 
 const JobSelector = ({ selectedJob, setJob }) => {
   const [sites, setSites] = useState([]);
