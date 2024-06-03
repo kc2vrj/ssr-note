@@ -17,7 +17,6 @@ module.exports = function override(config, env) {
     "net": require.resolve("node-libs-browser/mock/net"),
     "tls": require.resolve("node-libs-browser/mock/tls"),
     "child_process": false,
-    "timers": require.resolve("timers-browserify"),
     "timers/promises": require.resolve("timers-browserify"),
     "fs/promises": false, // Mock the fs/promises module
     "path": require.resolve("path-browserify"),
@@ -32,15 +31,6 @@ module.exports = function override(config, env) {
       Buffer: ['buffer', 'Buffer'],
     })
   );
-
-  return config;
-};
-
-
-const webpack = require('webpack');
-
-module.exports = function override(config, env) {
-  // ... (your existing config)
 
   config.module.rules.push({
     test: /bson\.js$/,
