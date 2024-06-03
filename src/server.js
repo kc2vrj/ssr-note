@@ -6,7 +6,7 @@ import { StaticRouter } from 'react-router-dom/server';
 import fs from 'fs';
 import App from './App';
 import apiRouter from './apiRouter';
-import { connectToMongo } from './mongoUtils';
+import { connectToMongo, getCollection } from './mongoUtils';
 
 const app = express();
 const PORT = process.env.PORT || 3000;

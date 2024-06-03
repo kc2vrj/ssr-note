@@ -3,8 +3,12 @@ import { getCollection } from './mongoUtils';
 
 const router = express.Router();
 
+router.use((req, res, next) => {
+  console.log(`Received request to ${req.path}`);
+  next();
+});
+
 router.post('/techs', async (req, res) => {
-  console.log('Received request to /api/techs');
   const { name } = req.body;
   try {
     const db = await getCollection('techs');
