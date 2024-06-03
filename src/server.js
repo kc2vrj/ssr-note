@@ -42,3 +42,15 @@ app.get('/admin', (req, res) => {
 app.listen(PORT, () => {
   console.log(`Server is listening on port ${PORT}`);
 });
+const admin = require('firebase-admin');
+const serviceAccount = require('./path/to/serviceAccountKey.json');
+
+admin.initializeApp({
+  credential: admin.credential.cert(serviceAccount),
+  databaseURL: 'https://your-database-name.firebaseio.com'
+});
+
+const db = admin.firestore();
+
+// Export the db object for use in other server-side files
+module.exports = { db };
