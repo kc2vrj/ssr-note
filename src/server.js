@@ -5,7 +5,7 @@ import ReactDOMServer from 'react-dom/server';
 import { StaticRouter } from 'react-router-dom/server';
 import fs from 'fs';
 import App from './App';
-import logger from './logger';
+import { getCollection } from './mongodb';
 
 const app = express();
 const PORT = process.env.PORT || 3000;

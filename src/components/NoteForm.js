@@ -1,5 +1,4 @@
 import React, { useState } from 'react';
-import { getCollection } from '../mongodb';
 import JobSelector from './JobSelector';
 import TechSelector from './TechSelector';
 

@@ -35,7 +35,7 @@ if (typeof window === 'undefined') {
     return database.collection(collectionName);
   };
 } else {
-  getCollection = async () => {
+  getCollection = async (collectionName) => {
     throw new Error('getCollection is not available in the browser');
   };
 }

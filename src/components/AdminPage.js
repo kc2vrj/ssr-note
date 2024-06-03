@@ -1,5 +1,4 @@
 import React, { useState } from 'react';
-import { getCollection } from '../mongodb';
 
 const AdminPage = ({ techs = [], sites = [], notes = [] }) => {
   const [newTech, setNewTech] = useState('');
