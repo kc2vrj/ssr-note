@@ -1,19 +1,17 @@
 import React, { useState, useEffect } from 'react';
-import { db } from '../firebase';
+import { getCollection } from '../mongodb';
 
 const JobSelector = ({ selectedJob, setJob }) => {
   const [sites, setSites] = useState([]);
 
   useEffect(() => {
-    const unsubscribe = firebaseApp
-      .firestore()
-      .collection('sites')
-      .onSnapshot((snapshot) => {
-        const sitesData = snapshot.docs.map((doc) => doc.data().name);
-        setSites(sitesData);
-      });
+    const fetchSites = async () => {
+      const sitesCollection = await getCollection('sites');
+      const sitesData = await sitesCollection.find().toArray();
+      setSites(sitesData.map(site => site.name));
+    };
 
-    return unsubscribe;
+    fetchSites();
   }, []);
 
   const handleJobChange = (e) => {
