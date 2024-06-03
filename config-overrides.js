@@ -13,16 +13,17 @@ module.exports = function override(config, env) {
     "zlib": require.resolve("browserify-zlib"),
     "timers": require.resolve("timers-browserify"),
     "http": require.resolve("stream-http"),
-    "fs": require.resolve("fs-browser"), // Use the polyfill
+    "fs": require.resolve("browserify-fs"), // Use the polyfill
     "net": require.resolve("node-libs-browser/mock/net"),
     "tls": require.resolve("node-libs-browser/mock/tls"),
     "child_process": false,
     "timers": require.resolve("timers-browserify"),
     "timers/promises": require.resolve("timers-browserify"),
-    "fs/promises": require.resolve("fs-browser"),
+    "fs/promises": require.resolve("browserify-fs"),
     "path": require.resolve("path-browserify"),
     "process": require.resolve("process/browser"),
-    "vm": require.resolve("vm-browserify")
+    "vm": require.resolve("vm-browserify"),
+    "dns": require.resolve("node-libs-browser/mock/dns")
   };
 
   config.plugins.push(
