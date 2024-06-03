@@ -14,8 +14,8 @@ module.exports = function override(config, env) {
     "timers": require.resolve("timers-browserify"),
     "http": require.resolve("stream-http"),
     "fs": require.resolve("fs-browser"), // Use the polyfill
-    "net": require.resolve("node-libs-browser/mock/net"),
-    "tls": require.resolve("node-libs-browser/mock/tls"),
+    "net": require.resolve("net-browserify"),
+    "tls": require.resolve("tls-browserify"),
     "child_process": false,
     "dns": require.resolve("dns-browserify"),
     "timers": require.resolve("timers-browserify"),
