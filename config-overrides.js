@@ -43,5 +43,16 @@ module.exports = function override(config, env) {
     include: /node_modules\/mongodb/
   });
 
+  config.module.rules.push({
+    test: /bson\.ts$/,
+    use: 'null-loader'
+  });
+
+  config.module.rules.push({
+    test: /\.ts$/,
+    use: 'null-loader',
+    include: /node_modules\/mongodb/
+  });
+
   return config;
 }
