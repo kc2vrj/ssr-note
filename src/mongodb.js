@@ -1,6 +1,6 @@
 import { MongoClient } from 'mongodb';
 
-const uri = 'your_mongodb_connection_string';
+const uri = 'mongodb://localhost:27017';
 const client = new MongoClient(uri, { useNewUrlParser: true, useUnifiedTopology: true });
 
 let db;
