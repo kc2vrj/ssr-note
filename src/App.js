@@ -6,8 +6,9 @@ import NoteList from './components/NoteList';
 import AdminPage from './components/AdminPage';
 
 const App = (props) => {
+  const Router = typeof window !== 'undefined' ? BrowserRouter : StaticRouter;
   return (
-    const Router = typeof window !== 'undefined' ? BrowserRouter : StaticRouter;
+    <Router>
       <div className="container">
         <h1><img src="https://stratfiresecurity.com/wp-content/uploads/2021/11/logo.png" alt="Logo" style={{height:"50px"}} /> Note Taking App</h1>
         <nav>
