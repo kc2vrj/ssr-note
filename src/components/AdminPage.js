@@ -14,7 +14,7 @@ const AdminPage = ({ techs = [], sites = [], notes = [] }) => {
           'Content-Type': 'application/json',
         },
         body: JSON.stringify({ name: newTech }),
-      });
+        });
 
       if (response.ok) {
         setNewTech('');
@@ -23,6 +23,7 @@ const AdminPage = ({ techs = [], sites = [], notes = [] }) => {
       }
     } catch (error) {
       console.error('Error adding tech:', error);
+      console.log(newTech);
     }
   };
 
