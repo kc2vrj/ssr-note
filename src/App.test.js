@@ -4,7 +4,7 @@ import { act } from 'react';
 import '@testing-library/jest-dom';
 import App from './App';
 
-test('renders Note Taking App title', () => {
+test('renders Note Taking App title', async () => {
   await act(async () => {
     render(<App />);
   });

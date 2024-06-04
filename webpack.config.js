@@ -7,12 +7,14 @@ module.exports = {
         "crypto": require.resolve("crypto-browserify"),
         "url": require.resolve("url/"),
         "assert": require.resolve("assert/"),
-        "net": false,
-        "tls": false,
-        "fs": false,
         "os": require.resolve("os-browserify/browser"),
-        "path": require.resolve("path-browserify"),
-        "http": require.resolve("stream-http")
+        "https": require.resolve("https-browserify"),
+        "querystring": require.resolve("querystring-es3"),
+        "zlib": require.resolve("browserify-zlib"),
+        "timers": require.resolve("timers-browserify"),
+        "http": require.resolve("stream-http"),
+        "fs": require.resolve("fs-browser") // Use the polyfill
+        // Add any other required fallbacks
+      }
     }
   }
-};
