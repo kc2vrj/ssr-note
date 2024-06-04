@@ -54,7 +54,38 @@ const AdminPage = ({ techs = [], sites = [], notes = [] }) => {
     }
   };
 
-  // ... (rest of the code remains the same)
+  return (
+    <div>
+      <h1>Admin Page</h1>
+      <div>
+        <h2>Add Tech</h2>
+        <input
+          type="text"
+          value={newTech}
+          onChange={(e) => setNewTech(e.target.value)}
+        />
+        <button onClick={handleAddTech}>Add Tech</button>
+      </div>
+      <div>
+        <h2>Add Site</h2>
+        <input
+          type="text"
+          value={newSite}
+          onChange={(e) => setNewSite(e.target.value)}
+        />
+        <button onClick={handleAddSite}>Add Site</button>
+      </div>
+      <div>
+        <h2>Add Note</h2>
+        <input
+          type="text"
+          value={newNote}
+          onChange={(e) => setNewNote(e.target.value)}
+        />
+        <button onClick={handleAddNote}>Add Note</button>
+      </div>
+    </div>
+  );
 };
 
 export default AdminPage;
