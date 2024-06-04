@@ -11,7 +11,11 @@ const port = 5000;
 
 // Middleware
 app.use(bodyParser.json());
-app.use(cors()); // Enable CORS for all routes
+app.use(cors({
+  origin: 'http://100.106.210.42:3000', // Replace with your frontend's origin
+  methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
+  credentials: true,
+}));
 
 // Connect to MongoDB (force IPv4)
 mongoose.connect('mongodb://127.0.0.1:27017/notetakingapp', {
