@@ -8,7 +8,22 @@ const AdminPage = ({ techs = [], sites = [], notes = [] }) => {
   const handleAddTech = async () => {
     try {
       // Send new tech to the server
-      const response = await fetch('/api/techs', {
+
+      // TODO: change shorthand routes to http://localhost:3000 (or whatever port you choose to run the backend)
+      // Move API routes out of apiRouter.js and to a new Node Express Server (Vanilla React.JS doesn't support API routes)
+      // In a new folder, run: npm init -y 
+      // Open package.json, add "type": "module"
+      // Suggested: install `pnpm` on linux to use in place of npm (it's much better - too many reasons to explain here)
+      // Run: (p)npm i express axios mongodb mongoose
+      // create an index.js and import express axios mongodb mongoose
+      // add routes (google Express JS for docs)
+      // replace `fetch` with axios 
+      // run the node server locally
+
+      // so the below fetch/axios request will be updated to http://localhost:3000/api/techs which will ping the local node server
+      // the apiRouter files in this repo will be removed
+
+      const response = await fetch('http://localhost:3000/api/techs', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
