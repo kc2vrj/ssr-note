@@ -57,4 +57,40 @@ router.post('/notes', async (req, res) => {
   }
 });
 
+router.put('/techs/:id', async (req, res) => {
+  const { id } = req.params;
+  const { name } = req.body;
+  try {
+    const db = await getCollection('techs');
+    await db.updateOne({ _id: new ObjectId(id) }, { $set: { name } });
+    res.status(200).send('Tech updated');
+  } catch (error) {
+    res.status(500).send('Failed to update tech');
+  }
+});
+
+router.put('/sites/:id', async (req, res) => {
+  const { id } = req.params;
+  const { name } = req.body;
+  try {
+    const db = await getCollection('sites');
+    await db.updateOne({ _id: new ObjectId(id) }, { $set: { name } });
+    res.status(200).send('Site updated');
+  } catch (error) {
+    res.status(500).send('Failed to update site');
+  }
+});
+
+router.put('/notes/:id', async (req, res) => {
+  const { id } = req.params;
+  const { note, job, tech, timestamp } = req.body;
+  try {
+    const db = await getCollection('notes');
+    await db.updateOne({ _id: new ObjectId(id) }, { $set: { note, job, tech, timestamp } });
+    res.status(200).send('Note updated');
+  } catch (error) {
+    res.status(500).send('Failed to update note');
+  }
+});
+
 export default router;
