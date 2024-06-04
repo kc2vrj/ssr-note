@@ -5,6 +5,7 @@ import ReactDOMServer from 'react-dom/server';
 import { StaticRouter } from 'react-router-dom/server';
 import fs from 'fs';
 import path from 'path';
+import path from 'path';
 import fs from 'fs';
 import App from './App';
 import apiRouter from './apiRouter';
@@ -24,10 +25,15 @@ logStream.on('error', (err) => {
   console.error('Failed to write to log file:', err);
 });
 
+logStream.on('error', (err) => {
+  console.error('Failed to write to log file:', err);
+});
+
 app.use((req, res, next) => {
   const logMessage = `Incoming request: ${req.method} ${req.url}\n`;
   logStream.write(logMessage);
   console.log(logMessage.trim());
+  logStream.write(`Logged request: ${req.method} ${req.url}\n`);
   logStream.write(`Logged request: ${req.method} ${req.url}\n`);
   next();
 });
