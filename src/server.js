@@ -1,81 +1,92 @@
 import express from 'express';
+import bodyParser from 'body-parser';
+import mongoose from 'mongoose';
 import path from 'path';
 import React from 'react';
-import ReactDOMServer from 'react-dom/server';
+import { renderToString } from 'react-dom/server';
 import { StaticRouter } from 'react-router-dom/server';
+import App from './src/App';
 import fs from 'fs';
-import path from 'path';
-import apiRouter from './apiRouter';
-import App from './App';
-import apiRouter from './apiRouter';
-import { connectToMongo, getCollection } from './mongoUtils';
 
 const app = express();
-const PORT = process.env.PORT || 3000;
+const port = 3000;
+
+// Middleware
+app.use(bodyParser.json());
+app.use(express.static(path.resolve(__dirname, 'build')));
 
 // Connect to MongoDB
-connectToMongo().then(() => {
-  console.log('MongoDB connection established');
+mongoose.connect('mongodb://127.0.0.1:27017/notetakingapp', {
+  useNewUrlParser: true,
+  useUnifiedTopology: true,
 });
 
-const logStream = fs.createWriteStream(path.join(__dirname, 'url.log'), { flags: 'a' });
+// Models
+const Tech = mongoose.model('Tech', new mongoose.Schema({ name: String }));
+const Site = mongoose.model('Site', new mongoose.Schema({ name: String }));
+const Note = mongoose.model('Note', new mongoose.Schema({
+  note: String,
+  job: String,
+  tech: String,
+  timestamp: Date,
+}));
 
-logStream.on('error', (err) => {
-  console.error('Failed to write to log file:', err);
-});
-
-logStream.on('error', (err) => {
-  console.error('Failed to write to log file:', err);
-});
-
-app.use((req, res, next) => {
-  const logMessage = `Incoming request: ${req.method} ${req.url}\n`;
-  logStream.write(logMessage);
-  console.log(logMessage.trim());
-  logStream.write(`Logged request: ${req.method} ${req.url}\n`);
-  logStream.write(`Logged request: ${req.method} ${req.url}\n`);
-  next();
-});
-
-app.use(express.static(path.resolve(__dirname, '../build')));
-
-app.use(express.json());
-
-app.use('/api', apiRouter);
-
-app.get('*', async (req, res) => {
+// Server-Side Rendering
+app.get('*', (req, res) => {
   const context = {};
-
-  // Fetch data from MongoDB
-  const techsCollection = await getCollection('techs').find().toArray();
-  const sitesCollection = await getCollection('sites').find().toArray();
-  const notesCollection = await getCollection('notes').find().toArray();
-
-  const initialData = {
-    techs: techsCollection.map(tech => tech.name),
-    sites: sitesCollection.map(site => site.name),
-    notes: notesCollection
-  };
-
-  const reactComponent = ReactDOMServer.renderToString(
+  const html = renderToString(
     <StaticRouter location={req.url} context={context}>
-      <App initialData={initialData} />
+      <App />
     </StaticRouter>
   );
 
-  const indexFile = path.resolve(__dirname, '../build/index.html');
-  fs.readFile(indexFile, 'utf8', (err, data) => {
+  fs.readFile(path.resolve('./build/index.html'), 'utf8', (err, data) => {
     if (err) {
-      return res.status(500).send('Oops, better luck next time!');
+      console.error(err);
+      return res.status(500).send('An error occurred');
     }
 
     return res.send(
-      data.replace('<div id="root"></div>', `<div id="root">${reactComponent}</div>`)
+      data.replace(
+        '<div id="root"></div>',
+        `<div id="root">${html}</div>`
+      )
     );
   });
 });
 
-app.listen(PORT, () => {
-  console.log(`Server is listening on port ${PORT}`);
-  console.log(`Server is listening on port ${PORT}`);
+// Server-Side Functions
+app.post('/add-tech', async (req, res) => {
+  const tech = new Tech(req.body);
+  try {
+    await tech.save();
+    res.status(201).send(tech);
+  } catch (error) {
+    res.status(400).send(error);
+  }
+});
+
+app.post('/add-site', async (req, res) => {
+  const site = new Site(req.body);
+  try {
+    await site.save();
+    res.status(201).send(site);
+  } catch (error) {
+    res.status(400).send(error);
+  }
+});
+
+app.post('/add-note', async (req, res) => {
+  const note = new Note(req.body);
+  try {
+    await note.save();
+    res.status(201).send(note);
+  } catch (error) {
+    res.status(400).send(error);
+  }
+});
+
+// Listen
+app.listen(port, () => {
+  console.log(`Server running at http://localhost:${port}/`);
 });
