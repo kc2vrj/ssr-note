@@ -24,7 +24,7 @@ router.use((req, res, next) => {
   next();
 });
 
-router.post('/techs', async (req, res) => {
+router.post('/api/techs', async (req, res) => {
   const { name } = req.body;
   try {
     const db = await getCollection('techs');
@@ -35,7 +35,7 @@ router.post('/techs', async (req, res) => {
   }
 });
 
-router.post('/sites', async (req, res) => {
+router.post('/api/sites', async (req, res) => {
   const { name } = req.body;
   try {
     const db = await getCollection('sites');
@@ -46,7 +46,7 @@ router.post('/sites', async (req, res) => {
   }
 });
 
-router.post('/notes', async (req, res) => {
+router.post('/api/notes', async (req, res) => {
   const { note, job, tech, timestamp } = req.body;
   try {
     const db = await getCollection('notes');

@@ -19,17 +19,10 @@ app.use((req, res, next) => {
 // Middleware
 app.use(bodyParser.json());
 app.use(cors({
-  origin: (origin, callback) => {
-    const allowedOrigins = [
-      'http://100.106.210.42:3000',
-      'https://strat.kc2vrj.com'
-    ];
-    if (allowedOrigins.includes(origin) || !origin) {
-      callback(null, true);
-    } else {
-      callback(new Error('Not allowed by CORS'));
-    }
-  },
+  origin: [
+    'http://100.106.210.42:3000',
+    'https://strat.kc2vrj.com'
+  ],
   methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
   credentials: true,
 }));
@@ -59,43 +52,10 @@ const Tech = mongoose.model('Tech', techSchema);
 const Site = mongoose.model('Site', siteSchema);
 const Note = mongoose.model('Note', noteSchema);
 
+import apiRouter from './apiRouter';
+
 // Routes
-app.post('/api/techs', async (req, res) => {
-  console.log('Received tech data:', req.body);
-  const tech = new Tech(req.body);
-  try {
-    await tech.save();
-    console.log('Tech saved:', tech);
-    res.status(201).send(tech);
-  } catch (error) {
-    console.error('Error saving tech:', error);
-    console.error('Error saving site:', error);
-    console.error('Error saving note:', error);
-    res.status(400).send(error);
-  }
-});
-
-app.post('/api/sites', async (req, res) => {
-  const site = new Site(req.body);
-  try {
-    await site.save();
-    console.log('Site saved:', site);
-    res.status(201).send(site);
-  } catch (error) {
-    res.status(400).send(error);
-  }
-});
-
-app.post('/api/notes', async (req, res) => {
-  const note = new Note(req.body);
-  try {
-    await note.save();
-    console.log('Note saved:', note);
-    res.status(201).send(note);
-  } catch (error) {
-    res.status(400).send(error);
-  }
-});
+app.use('/api', apiRouter);
 
 // Create HTTP server
 app.listen(port, () => {
