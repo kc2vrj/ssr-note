@@ -1,9 +1,9 @@
 import express from 'express';
 import fs from 'fs';
 import path from 'path';
-import { getCollection } from './mongoUtils';
+import { getCollection } from './mongoUtils.js';
 
-const logStream = fs.createWriteStream(path.join(__dirname, 'url.log'), { flags: 'a' });
+//const logStream = fs.createWriteStream(path.join(__dirname, 'url.log'), { flags: 'a' });
 
 logStream.on('error', (err) => {
   console.error('Failed to write to log file:', err);
