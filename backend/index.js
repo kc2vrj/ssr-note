@@ -52,7 +52,7 @@ const Tech = mongoose.model('Tech', techSchema);
 const Site = mongoose.model('Site', siteSchema);
 const Note = mongoose.model('Note', noteSchema);
 
-import apiRouter from './apiRouter';
+import apiRouter from '../apiRouter.js';
 
 // Routes
 app.use('/api', apiRouter);
