@@ -8,7 +8,7 @@ const AdminPage = ({ techs = [], sites = [], notes = [] }) => {
 
   const handleAddTech = async () => {
     try {
-      const response = await axios.post('/add-tech', { name: newTech });
+      const response = await axios.post('http://localhost:3000/add-tech', { name: newTech });
 
       if (response.status === 201) {
         setNewTech('');
@@ -23,7 +23,7 @@ const AdminPage = ({ techs = [], sites = [], notes = [] }) => {
 
   const handleAddSite = async () => {
     try {
-      const response = await axios.post('/add-site', { name: newSite });
+      const response = await axios.post('http://localhost:3000/add-site', { name: newSite });
 
       if (response.status === 201) {
         setNewSite('');
@@ -38,7 +38,7 @@ const AdminPage = ({ techs = [], sites = [], notes = [] }) => {
 
   const handleAddNote = async () => {
     try {
-      const response = await axios.post('/add-note', { name: newNote });
+      const response = await axios.post('http://localhost:3000/add-note', { name: newNote });
 
       if (response.status === 201) {
         setNewNote('');
