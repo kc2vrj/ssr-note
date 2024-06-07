@@ -4,11 +4,10 @@ import mongoose from 'mongoose';
 import cors from 'cors';
 
 
-app.use(cors()) // Use this after the variable declaration
-
-
 const app = express();
-const port = 5000;
+
+app.use(cors()) // Use this after the variable declaration
+const port = process.env.PORT || 5000;
 
 // Middleware
 app.use(bodyParser.json());
@@ -19,20 +18,11 @@ app.use(cors({
 }));
 
 // Connect to MongoDB (force IPv4)
-mongoose.connect('mongodb://127.0.0.1:27017/notetakingapp', {
-  useNewUrlParser: true,
-  useUnifiedTopology: true,
-});
+mongoose.connect('mongodb://127.0.0.1:27017/notetakingapp')
+  .then(() => console.log('Connected to MongoDB'))
+  .catch((error) => console.error('Error connecting to MongoDB:', error));
 
-// Models (define your schema here)
-const Tech = mongoose.model('Tech', new mongoose.Schema({ name: String }));
-const Site = mongoose.model('Site', new mongoose.Schema({ name: String }));
-const Note = mongoose.model('Note', new mongoose.Schema({
-  note: String,
-  job: String,
-  tech: String,
-  timestamp: Date,
-}));
+import { Tech, Site, Note } from './models.js';
 
 // Routes
 app.post('/api/techs', async (req, res) => {
