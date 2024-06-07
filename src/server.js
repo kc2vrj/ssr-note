@@ -19,8 +19,7 @@ app.use(express.static(path.resolve(__dirname, 'build')));
 app.use(helmet({
   permissionsPolicy: {
     features: {
-      'run-ad-auction': [],
-      'join-ad-interest-group': []
+      'run-ad-auction': []
     }
   }
 }));
