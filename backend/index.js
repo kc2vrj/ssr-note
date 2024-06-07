@@ -2,27 +2,61 @@ import express from 'express';
 import bodyParser from 'body-parser';
 import mongoose from 'mongoose';
 import cors from 'cors';
+import dotenv from 'dotenv';
 
+dotenv.config();
 
 const app = express();
-
-app.use(cors()) // Use this after the variable declaration
 const port = process.env.PORT || 5000;
+
+// Middleware to log requests
+app.use((req, res, next) => {
+  console.log(`${req.method} ${req.url}`);
+  console.log('Request Body:', req.body);
+  next();
+});
 
 // Middleware
 app.use(bodyParser.json());
 app.use(cors({
-  origin: 'http://100.106.210.42:3000', // Replace with your frontend's origin
+  origin: (origin, callback) => {
+    const allowedOrigins = [
+      'http://100.106.210.42:3000',
+      'https://strat.kc2vrj.com'
+    ];
+    if (allowedOrigins.includes(origin) || !origin) {
+      callback(null, true);
+    } else {
+      callback(new Error('Not allowed by CORS'));
+    }
+  },
   methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
   credentials: true,
 }));
 
 // Connect to MongoDB (force IPv4)
-mongoose.connect('mongodb://127.0.0.1:27017/notetakingapp')
-  .then(() => console.log('Connected to MongoDB'))
-  .catch((error) => console.error('Error connecting to MongoDB:', error));
+mongoose.connect(process.env.MONGODB_URI || 'mongodb://127.0.0.1:27017/notetakingapp', {
+  useNewUrlParser: true,
+  useUnifiedTopology: true,
+}).then(() => {
+  console.log('Connected to MongoDB');
+}).catch(error => {
+  console.error('MongoDB connection error:', error);
+});
 
-import { Tech, Site, Note } from './models.js';
+// Models (define your schema here)
+const techSchema = new mongoose.Schema({ name: { type: String, required: true } });
+const siteSchema = new mongoose.Schema({ name: { type: String, required: true } });
+const noteSchema = new mongoose.Schema({
+  note: { type: String, required: true },
+  job: { type: String, required: true },
+  tech: { type: String, required: true },
+  timestamp: { type: Date, default: Date.now },
+});
+
+const Tech = mongoose.model('Tech', techSchema);
+const Site = mongoose.model('Site', siteSchema);
+const Note = mongoose.model('Note', noteSchema);
 
 // Routes
 app.post('/api/techs', async (req, res) => {
@@ -56,7 +90,6 @@ app.post('/api/notes', async (req, res) => {
 });
 
 // Create HTTP server
-// Listen
 app.listen(port, () => {
   console.log(`Server running at http://localhost:${port}/`);
 });

@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import axios from 'axios';
 import JobSelector from './JobSelector';
 import TechSelector from './TechSelector';
 
@@ -9,36 +10,35 @@ const NoteForm = ({ sites }) => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    // Send form data to the server
-    const response = await fetch('/api/notes', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({
+
+    try {
+      const response = await axios.post('http://localhost:5000/api/notes', {
         note,
         job: selectedJob,
         tech: selectedTech,
         timestamp: new Date().toISOString(),
-      }),
-    });
+      });
 
-    if (response.ok) {
-      // Clear the form
-      setNote('');
-      setSelectedJob('');
-      setSelectedTech('');
-    } else {
-      console.error('Failed to add note');
+      if (response.status === 201) {
+        // Clear the form
+        setNote('');
+        setSelectedJob('');
+        setSelectedTech('');
+      } else {
+        console.error('Failed to add note');
+      }
+    } catch (error) {
+      console.error('Error adding note:', error);
     }
-    setNote('');
-    setSelectedJob('');
-    setSelectedTech('');
   };
 
   return (
     <form onSubmit={handleSubmit}>
-      <textarea value={note} onChange={(e) => setNote(e.target.value)} />
+      <textarea 
+        value={note} 
+        onChange={(e) => setNote(e.target.value)} 
+        placeholder="Enter your note"
+      />
       <JobSelector selectedJob={selectedJob} setJob={setSelectedJob} />
       <TechSelector selectedTech={selectedTech} setTech={setSelectedTech} />
       <button type="submit">Add Note</button>

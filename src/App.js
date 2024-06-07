@@ -4,7 +4,9 @@ import NoteForm from './components/NoteForm';
 import NoteList from './components/NoteList';
 import AdminPage from './components/AdminPage';
 
-const App = ({ initialData, ...props }) => {
+const App = (props) => {
+  const { initialData } = props;
+
   return (
     <Router>
       <div className="container">

@@ -8,7 +8,7 @@ const AdminPage = ({ techs = [], sites = [], notes = [] }) => {
 
   const handleAddTech = async () => {
     try {
-      const response = await axios.post('http://localhost:3000/add-tech', { name: newTech });
+      const response = await axios.post('http://localhost:5000/api/techs', { name: newTech });
 
       if (response.status === 201) {
         setNewTech('');
@@ -23,7 +23,7 @@ const AdminPage = ({ techs = [], sites = [], notes = [] }) => {
 
   const handleAddSite = async () => {
     try {
-      const response = await axios.post('http://localhost:3000/add-site', { name: newSite });
+      const response = await axios.post('http://localhost:5000/api/sites', { name: newSite });
 
       if (response.status === 201) {
         setNewSite('');
@@ -38,7 +38,12 @@ const AdminPage = ({ techs = [], sites = [], notes = [] }) => {
 
   const handleAddNote = async () => {
     try {
-      const response = await axios.post('http://localhost:3000/add-note', { name: newNote });
+      const response = await axios.post('http://localhost:5000/api/notes', { 
+        note: newNote,
+        job: 'Example Job', // Placeholder values
+        tech: 'Example Tech', // Placeholder values
+        timestamp: new Date()
+      });
 
       if (response.status === 201) {
         setNewNote('');
@@ -62,7 +67,8 @@ const AdminPage = ({ techs = [], sites = [], notes = [] }) => {
 
   const handleDeleteTech = async (tech) => {
     try {
-      // Delete tech from Firestore (handled server-side)
+      await axios.delete(`http://localhost:5000/api/techs/${tech._id}`);
+      window.location.reload();
     } catch (error) {
       console.error('Error deleting tech:', error);
     }
@@ -79,7 +85,8 @@ const AdminPage = ({ techs = [], sites = [], notes = [] }) => {
 
   const handleDeleteSite = async (site) => {
     try {
-      // Delete site from Firestore (handled server-side)
+      await axios.delete(`http://localhost:5000/api/sites/${site._id}`);
+      window.location.reload();
     } catch (error) {
       console.error('Error deleting site:', error);
     }
@@ -96,7 +103,8 @@ const AdminPage = ({ techs = [], sites = [], notes = [] }) => {
 
   const handleDeleteNote = async (note) => {
     try {
-      // Delete note from Firestore (handled server-side)
+      await axios.delete(`http://localhost:5000/api/notes/${note._id}`);
+      window.location.reload();
     } catch (error) {
       console.error('Error deleting note:', error);
     }
@@ -116,7 +124,7 @@ const AdminPage = ({ techs = [], sites = [], notes = [] }) => {
         <ul>
           {techs.length > 0 ? (
             techs.map((tech) => (
-              <li key={tech.id}>
+              <li key={tech._id}>
                 {tech.name}
                 <button onClick={() => handleEditTech(tech)}>Edit</button>
                 <button onClick={() => handleDeleteTech(tech)}>Delete</button>
@@ -138,7 +146,7 @@ const AdminPage = ({ techs = [], sites = [], notes = [] }) => {
         <ul>
           {sites.length > 0 ? (
             sites.map((site) => (
-              <li key={site.id}>
+              <li key={site._id}>
                 {site.name}
                 <button onClick={() => handleEditSite(site)}>Edit</button>
                 <button onClick={() => handleDeleteSite(site)}>Delete</button>
@@ -160,7 +168,7 @@ const AdminPage = ({ techs = [], sites = [], notes = [] }) => {
         <ul>
           {notes.length > 0 ? (
             notes.map((note) => (
-              <li key={note.id}>
+              <li key={note._id}>
                 <p>Note: {note.note}</p>
                 <p>Job: {note.job}</p>
                 <p>Tech: {note.tech}</p>

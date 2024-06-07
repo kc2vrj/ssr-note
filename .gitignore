@@ -4,6 +4,7 @@
 /node_modules
 /.pnp
 .pnp.js
+/backend/node_modules
 
 # testing
 /coverage
@@ -25,3 +26,5 @@ yarn-error.log*
 /node.js
 .env
 secure.env
+package-lock.json
+url.log

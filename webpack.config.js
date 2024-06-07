@@ -8,7 +8,6 @@ module.exports = {
       "url": require.resolve("url/"),
       "assert": require.resolve("assert/"),
       "os": require.resolve("os-browserify/browser"),
-      "https": require.resolve("https-browserify"),
       "querystring": require.resolve("querystring-es3"),
       "zlib": require.resolve("browserify-zlib"),
       "timers": require.resolve("timers-browserify"),
