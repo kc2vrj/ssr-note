@@ -11,9 +11,19 @@ import fs from 'fs';
 const app = express();
 const port = 3000;
 
+import helmet from 'helmet';
+
 // Middleware
 app.use(bodyParser.json());
 app.use(express.static(path.resolve(__dirname, 'build')));
+app.use(helmet({
+  permissionsPolicy: {
+    features: {
+      'run-ad-auction': [],
+      'join-ad-interest-group': []
+    }
+  }
+}));
 
 // Connect to MongoDB
 mongoose.connect('mongodb://127.0.0.1:27017/notetakingapp', {
