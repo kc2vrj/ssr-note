@@ -4,12 +4,9 @@ import path from 'path';
 import { getCollection } from './mongoUtils.js';
 
 import { fileURLToPath } from 'url';
- const __filename = fileURLToPath(import.meta.url);
- const __dirname = path.dirname(__filename);
- import { fileURLToPath } from 'url';
- const __filename = fileURLToPath(import.meta.url);
- const __dirname = path.dirname(__filename);
- const logStream = fs.createWriteStream(path.join(__dirname, 'url.log'), { flags: 'a' });
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
+const logStream = fs.createWriteStream(path.join(__dirname, 'url.log'), { flags: 'a' });
 
 
 logStream.on('error', (err) => {
