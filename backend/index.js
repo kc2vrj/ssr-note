@@ -55,8 +55,6 @@ const Note = mongoose.model('Note', noteSchema);
 
 import apiRouter from './apiRouter.js';
 
-import apiRouter from './apiRouter.js';
-
 // Routes
 app.use('/api', apiRouter);
 
