@@ -3,7 +3,7 @@ import mongoose from 'mongoose';
 export const connectToMongo = async () => {
   try {
     // MongoDB connection URI
-    const uri = 'mongodb://127.0.0.1:27017/note-app';
+    const uri = process.env.MONGODB_URI || 'mongodb://127.0.0.1:27017/notetakingapp';
 
     await mongoose.connect(uri, {
       useNewUrlParser: true,

@@ -1,7 +1,8 @@
 import express from 'express';
 import fs from 'fs';
 import path from 'path';
-import { getCollection } from './mongoUtils.js';
+import { Tech, Site, Note } from './models.js';
+import { ObjectId } from 'mongodb';
 
 import { fileURLToPath } from 'url';
 const __filename = fileURLToPath(import.meta.url);
@@ -23,8 +24,8 @@ router.use((req, res, next) => {
 router.post('/techs', async (req, res) => {
   const { name } = req.body;
   try {
-    const db = await getCollection('techs');
-    await db.insertOne({ name });
+    const tech = new Tech({ name });
+    await tech.save();
     res.status(201).send('Tech added');
   } catch (error) {
     res.status(500).send('Failed to add tech');
@@ -34,8 +35,8 @@ router.post('/techs', async (req, res) => {
 router.post('/api/sites', async (req, res) => {
   const { name } = req.body;
   try {
-    const db = await getCollection('sites');
-    await db.insertOne({ name });
+    const site = new Site({ name });
+    await site.save();
     res.status(201).send('Site added');
   } catch (error) {
     res.status(500).send('Failed to add site');
@@ -45,8 +46,8 @@ router.post('/api/sites', async (req, res) => {
 router.post('/api/notes', async (req, res) => {
   const { note, job, tech, timestamp } = req.body;
   try {
-    const db = await getCollection('notes');
-    await db.insertOne({ note, job, tech, timestamp });
+    const newNote = new Note({ note, job, tech, timestamp });
+    await newNote.save();
     res.status(201).send('Note added');
   } catch (error) {
     res.status(500).send('Failed to add note');
@@ -57,8 +58,7 @@ router.put('/techs/:id', async (req, res) => {
   const { id } = req.params;
   const { name } = req.body;
   try {
-    const db = await getCollection('techs');
-    await db.updateOne({ _id: new ObjectId(id) }, { $set: { name } });
+    await Tech.updateOne({ _id: new ObjectId(id) }, { $set: { name } });
     res.status(200).send('Tech updated');
   } catch (error) {
     res.status(500).send('Failed to update tech');
@@ -69,8 +69,7 @@ router.put('/sites/:id', async (req, res) => {
   const { id } = req.params;
   const { name } = req.body;
   try {
-    const db = await getCollection('sites');
-    await db.updateOne({ _id: new ObjectId(id) }, { $set: { name } });
+    await Site.updateOne({ _id: new ObjectId(id) }, { $set: { name } });
     res.status(200).send('Site updated');
   } catch (error) {
     res.status(500).send('Failed to update site');
@@ -81,8 +80,7 @@ router.put('/notes/:id', async (req, res) => {
   const { id } = req.params;
   const { note, job, tech, timestamp } = req.body;
   try {
-    const db = await getCollection('notes');
-    await db.updateOne({ _id: new ObjectId(id) }, { $set: { note, job, tech, timestamp } });
+    await Note.updateOne({ _id: new ObjectId(id) }, { $set: { note, job, tech, timestamp } });
     res.status(200).send('Note updated');
   } catch (error) {
     res.status(500).send('Failed to update note');

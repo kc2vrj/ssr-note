@@ -40,19 +40,7 @@ mongoose.connect(process.env.MONGODB_URI || 'mongodb://127.0.0.1:27017/notetakin
   process.exit(1); // Exit the process if unable to connect to MongoDB
 });
 
-// Models (define your schema here)
-const techSchema = new mongoose.Schema({ name: { type: String, required: true } });
-const siteSchema = new mongoose.Schema({ name: { type: String, required: true } });
-const noteSchema = new mongoose.Schema({
-  note: { type: String, required: true },
-  job: { type: String, required: true },
-  tech: { type: String, required: true },
-  timestamp: { type: Date, default: Date.now },
-});
-
-const Tech = mongoose.model('Tech', techSchema);
-const Site = mongoose.model('Site', siteSchema);
-const Note = mongoose.model('Note', noteSchema);
+import { Tech, Site, Note } from './models.js';
 
 
 
