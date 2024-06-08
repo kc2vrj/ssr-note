@@ -9,9 +9,6 @@ const __dirname = path.dirname(__filename);
 const logStream = fs.createWriteStream(path.join(__dirname, 'url.log'), { flags: 'a' });
 
 
-logStream.on('error', (err) => {
-  console.error('Failed to write to log file:', err);
-});
 
 logStream.on('error', (err) => {
   console.error('Failed to write to log file:', err);
@@ -23,7 +20,6 @@ router.use((req, res, next) => {
   const logMessage = `Received request to ${req.path}\n`;
   logStream.write(logMessage);
   console.log(logMessage.trim());
-  logStream.write(`Logged request: ${req.method} ${req.url}\n`);
   logStream.write(`Logged request: ${req.method} ${req.url}\n`);
   next();
 });
