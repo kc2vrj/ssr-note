@@ -2,6 +2,7 @@ import express from 'express';
 import bodyParser from 'body-parser';
 import mongoose from 'mongoose';
 import cors from 'cors';
+import apiRouter from './apiRouter.js';
 import dotenv from 'dotenv';
 
 dotenv.config();
@@ -55,7 +56,7 @@ const Note = mongoose.model('Note', noteSchema);
 
 
 
-// Create HTTP server
+app.use('/api', apiRouter);
 app.listen(port, () => {
   console.log(`Server running at http://localhost:${port}/`);
 });
