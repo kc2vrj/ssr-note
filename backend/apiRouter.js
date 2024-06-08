@@ -28,7 +28,7 @@ router.use((req, res, next) => {
   next();
 });
 
-router.post('/api/techs', async (req, res) => {
+router.post('/techs', async (req, res) => {
   const { name } = req.body;
   try {
     const db = await getCollection('techs');

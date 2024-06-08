@@ -21,7 +21,8 @@ app.use(bodyParser.json());
 app.use(cors({
   origin: [
     'http://100.106.210.42:3000',
-    'https://strat.kc2vrj.com'
+    'https://strat.kc2vrj.com',
+    'http://localhost:3000'
   ],
   methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
   credentials: true,
@@ -51,6 +52,8 @@ const noteSchema = new mongoose.Schema({
 const Tech = mongoose.model('Tech', techSchema);
 const Site = mongoose.model('Site', siteSchema);
 const Note = mongoose.model('Note', noteSchema);
+
+import apiRouter from './apiRouter.js';
 
 import apiRouter from './apiRouter.js';
 
