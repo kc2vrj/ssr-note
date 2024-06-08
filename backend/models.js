@@ -1,12 +1,16 @@
 import mongoose from 'mongoose';
 
-const Tech = mongoose.model('Tech', new mongoose.Schema({ name: String }));
-const Site = mongoose.model('Site', new mongoose.Schema({ name: String }));
-const Note = mongoose.model('Note', new mongoose.Schema({
-  note: String,
-  job: String,
-  tech: String,
-  timestamp: Date,
-}));
+const techSchema = new mongoose.Schema({ name: { type: String, required: true } });
+const siteSchema = new mongoose.Schema({ name: { type: String, required: true } });
+const noteSchema = new mongoose.Schema({
+  note: { type: String, required: true },
+  job: { type: String, required: true },
+  tech: { type: String, required: true },
+  timestamp: { type: Date, default: Date.now },
+});
+
+const Tech = mongoose.model('Tech', techSchema);
+const Site = mongoose.model('Site', siteSchema);
+const Note = mongoose.model('Note', noteSchema);
 
 export { Tech, Site, Note };
