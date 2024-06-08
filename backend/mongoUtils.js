@@ -1,5 +1,6 @@
 import mongoose from 'mongoose';
 
+export default { connectToMongo, getCollection }; // Add this line
 export const connectToMongo = async () => {
   try {
     // MongoDB connection URI

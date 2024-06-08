@@ -30,15 +30,7 @@ app.use(cors({
 }));
 
 // Connect to MongoDB (force IPv4)
-mongoose.connect(process.env.MONGODB_URI || 'mongodb://127.0.0.1:27017/notetakingapp', {
-  useNewUrlParser: true,
-  useUnifiedTopology: true,
-}).then(() => {
-  console.log('Connected to MongoDB');
-}).catch(error => {
-  console.error('MongoDB connection error:', error);
-  process.exit(1); // Exit the process if unable to connect to MongoDB
-});
+// Remove this block, as it's already handled in mongoUtils.js
 
 import { Tech, Site, Note } from './models.js';
 

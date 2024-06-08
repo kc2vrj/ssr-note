@@ -3,6 +3,7 @@ import fs from 'fs';
 import path from 'path';
 import { Tech, Site, Note } from './models.js';
 import { ObjectId } from 'mongodb';
+import mongoose from 'mongoose'; // Add this line
 
 import { fileURLToPath } from 'url';
 const __filename = fileURLToPath(import.meta.url);
