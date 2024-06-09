@@ -1,6 +1,6 @@
 import { addTech } from "../db/firebase";
 import { Site, Tech } from "../db/models";
-import { addSite} from "../db/firebase";
+import { addSite } from "../db/firebase";
 
 export const createTech = async(name)=>{
     try {

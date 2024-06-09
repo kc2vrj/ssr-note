@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import axios from 'axios';
-import { createTech } from '../Uitls';
+import { createTech,createSite } from '../Uitls';
 
 const AdminPage = ({ techs = [], sites = [], notes = [] }) => {
   const [newTech, setNewTech] = useState('');
@@ -9,8 +9,7 @@ const AdminPage = ({ techs = [], sites = [], notes = [] }) => {
 
   const handleAddTech = async () => {
     try {
-      // const response = await axios.post('http://localhost:5000/api/techs', { name: newTech });
-      const response = await createTech(newTech)
+            const response = await createTech(newTech)
 
       if (response.status === 201) {
         setNewTech('');
@@ -25,8 +24,7 @@ const AdminPage = ({ techs = [], sites = [], notes = [] }) => {
 
   const handleAddSite = async () => {
     try {
-      const response = await axios.post('http://localhost:5000/api/sites', { name: newSite });
-
+            const response = await createSite(newSite)
       if (response.status === 201) {
         setNewSite('');
         window.location.reload();
