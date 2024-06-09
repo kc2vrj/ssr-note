@@ -25,6 +25,7 @@
     "ignore-styles": "^5.0.1",
     "mongo": "^0.1.0",
     "mongodb": "^6.7.0",
+    "mongoose": "^8.4.1",
     "net-browserify": "^0.2.4",
     "node-fetch": "^3.3.2",
     "node-libs-browser": "^2.2.1",
