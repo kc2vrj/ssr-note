@@ -85,7 +85,7 @@ app.post('/add-site', async (req, res) => {
   }
 });
 
-app.post('/add-note', async (req, res) => {
+app.post('/api/notes', async (req, res) => {
   const note = new Note(req.body);
   try {
     await note.save();

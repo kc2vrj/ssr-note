@@ -1,31 +1,32 @@
-import React from 'react';
-import PropTypes from 'prop-types';
+import React, { useState, useEffect } from 'react';
 
-const JobSelector = ({ selectedJob, setJob, sites }) => {
-  const handleJobChange = (e) => {
-    setJob(e.target.value);
+const JobSelector = ({ selectedTech, setTech }) => {
+  const [techs, setTechs] = useState([]);
+
+  useEffect(() => {
+    // Fetch techs from the server
+    const fetchTechs = async () => {
+      // This should be handled on the server side
+      setTechs([]);
+    };
+
+    fetchTechs();
+  }, []);
+
+  const handleTechChange = (e) => {
+    setTech(e.target.value);
   };
 
   return (
-    <select value={selectedJob} onChange={handleJobChange}>
-      <option value="">All Jobs</option>
-      {sites.map((site, index) => (
-        <option key={index} value={site}>
-          {site}
+    <select value={selectedTech} onChange={handleTechChange}>
+      <option value="">Select a tech</option>
+      {techs.map((tech) => (
+        <option key={tech} value={tech}>
+          {tech}
         </option>
       ))}
     </select>
   );
-};
-
-JobSelector.propTypes = {
-  selectedJob: PropTypes.string.isRequired,
-  setJob: PropTypes.func.isRequired,
-  sites: PropTypes.arrayOf(PropTypes.string)
-};
-
-JobSelector.defaultProps = {
-  sites: []
 };
 
 export default JobSelector;

@@ -1,24 +1,19 @@
 import mongoose from 'mongoose';
+import dotenv from 'dotenv';
 
-export default { connectToMongo, getCollection }; // Add this line
+dotenv.config();
+
+const uri = process.env.MONGODB_URI_LOCAL;
+
 export const connectToMongo = async () => {
   try {
-    // MongoDB connection URI
-    const uri = process.env.MONGODB_URI || 'mongodb://127.0.0.1:27017/notetakingapp';
-
     await mongoose.connect(uri, {
       useNewUrlParser: true,
       useUnifiedTopology: true,
     });
 
-    console.log('Connected to MongoDB');
+    console.log(`Connected to MongoDB at ${uri}`);
   } catch (err) {
     console.error(err);
   }
-};
-
-export const getCollection = async (collectionName) => {
-  const db = await mongoose.connection.db;
-  const collection = db.collection(collectionName);
-  return collection;
 };
