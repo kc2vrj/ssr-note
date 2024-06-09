@@ -1,5 +1,6 @@
 import { addTech } from "../db/firebase";
-import { Tech } from "../db/models";
+import { Site, Tech } from "../db/models";
+import { addSite} from "../db/firebase";
 
 export const createTech = async(name)=>{
     try {
@@ -13,4 +14,18 @@ export const createTech = async(name)=>{
       } catch (error) {
         console.log(error);
       }
+}
+
+export const createSite = async(name)=>{
+  try {
+      if (process.env.DATABASE === 'mongo') {
+        const Site = new Site({ name });
+        await Site.save();
+      } else {
+        await addSite({ name });
+      }
+      return { message: 'Site added' }
+    } catch (error) {
+      console.log(error);
+    }
 }
