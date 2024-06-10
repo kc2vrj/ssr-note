@@ -1,5 +1,5 @@
-import { addNote, addTech, addSite, deleteNote, deleteTech, deleteSite, updateNote, updateTech, updateSite } from "./firebase";
-import { Site, Tech, Note } from "./models";
+import { addNote, addTech, addSite, deleteNote, deleteTech, deleteSite, updateNote, updateTech, updateSite } from "../db/firebase";
+import { Site, Tech, Note } from "../db/models";
 
 // Create Functions
 export const createTech = async (name) => {
@@ -91,7 +91,7 @@ export const removeNote = async (id) => {
 };
 
 // Update Functions
-export const updateTech = async (id, name) => {
+export const updateTech1 = async (id, name) => {
   try {
     if (process.env.DATABASE === 'mongo') {
       await Tech.findByIdAndUpdate(id, { name });
@@ -105,7 +105,7 @@ export const updateTech = async (id, name) => {
   }
 };
 
-export const updateSite = async (id, name) => {
+export const updateSite1 = async (id, name) => {
   try {
     if (process.env.DATABASE === 'mongo') {
       await Site.findByIdAndUpdate(id, { name });
@@ -119,7 +119,7 @@ export const updateSite = async (id, name) => {
   }
 };
 
-export const updateNote = async (id, name) => {
+export const updateNote1 = async (id, name) => {
   try {
     if (process.env.DATABASE === 'mongo') {
       await Note.findByIdAndUpdate(id, { name });

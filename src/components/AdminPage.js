@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { createTech, createSite, createNote, removeTech, removeSite, removeNote, updateTech, updateSite, updateNote } from '../Uitls';
+import { createTech, createSite, createNote, removeTech, removeSite, removeNote, updateTech1, updateSite1, updateNote1 } from '../Uitls';
 
 const AdminPage = ({ techs = [], sites = [], notes = [] }) => {
   const [newTech, setNewTech] = useState('');
@@ -77,7 +77,7 @@ const AdminPage = ({ techs = [], sites = [], notes = [] }) => {
           placeholder="Enter new technician name"
         />
         {editTech ? (
-          <button onClick={() => handleUpdateItem(updateTech, editTech._id, newTech, setNewTech, setEditTech)}>Update Tech</button>
+          <button onClick={() => handleUpdateItem(updateTech1, editTech._id, newTech, setNewTech, setEditTech)}>Update Tech</button>
         ) : (
           <button onClick={() => handleAddItem(createTech, newTech, setNewTech)}>Add Tech</button>
         )}
@@ -103,7 +103,7 @@ const AdminPage = ({ techs = [], sites = [], notes = [] }) => {
           placeholder="Enter new site name"
         />
         {editSite ? (
-          <button onClick={() => handleUpdateItem(updateSite, editSite._id, newSite, setNewSite, setEditSite)}>Update Site</button>
+          <button onClick={() => handleUpdateItem(updateSite1, editSite._id, newSite, setNewSite, setEditSite)}>Update Site</button>
         ) : (
           <button onClick={() => handleAddItem(createSite, newSite, setNewSite)}>Add Site</button>
         )}
@@ -129,7 +129,7 @@ const AdminPage = ({ techs = [], sites = [], notes = [] }) => {
           placeholder="Enter new note"
         />
         {editNote ? (
-          <button onClick={() => handleUpdateItem(updateNote, editNote._id, newNote, setNewNote, setEditNote)}>Update Note</button>
+          <button onClick={() => handleUpdateItem(updateNote1, editNote._id, newNote, setNewNote, setEditNote)}>Update Note</button>
         ) : (
           <button onClick={() => handleAddItem(createNote, newNote, setNewNote)}>Add Note</button>
         )}

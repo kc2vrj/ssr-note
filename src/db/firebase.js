@@ -1,6 +1,6 @@
 // firebase.js
 import { initializeApp } from 'firebase/app';
-import { getFirestore, collection, addDoc, updateDoc, doc, getDocs, deleteDosc, setDoc } from 'firebase/firestore';
+import { getFirestore, collection, addDoc, updateDoc, doc, getDocs, deleteDoc, setDoc } from 'firebase/firestore';
 import dotenv from 'dotenv';
 
 dotenv.config();
