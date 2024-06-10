@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { createTech, createSite, createNote, removeTech, removeSite, removeNote } from '../Uitls';
+import { createTech, createSite, createNote, removeTech, removeSite, removeNote, updateTech, updateSite, updateNote } from '../Uitls';
 
 const AdminPage = ({ techs = [], sites = [], notes = [] }) => {
   const [newTech, setNewTech] = useState('');
@@ -51,18 +51,18 @@ const AdminPage = ({ techs = [], sites = [], notes = [] }) => {
     setNewNote(note.name);
   };
 
-  const handleUpdateItem = async (updateFunc, updatedItem, setUpdatedItem, resetEdit) => {
+  const handleUpdateItem = async (updateFunc, id, newItem, setNewItem, resetEdit) => {
     try {
-      const response = await updateFunc(updatedItem);
+      const response = await updateFunc(id, newItem);
       if (response.message) {
-        setUpdatedItem('');
+        setNewItem('');
         resetEdit(null);
         window.location.reload();
       } else {
-        console.error(`Failed to update item: ${updatedItem}`);
+        console.error(`Failed to update item: ${newItem}`);
       }
     } catch (error) {
-      console.error(`Error updating item: ${updatedItem}`, error);
+      console.error(`Error updating item: ${newItem}`, error);
     }
   };
 
@@ -77,7 +77,7 @@ const AdminPage = ({ techs = [], sites = [], notes = [] }) => {
           placeholder="Enter new technician name"
         />
         {editTech ? (
-          <button onClick={() => handleUpdateItem(createTech, newTech, setNewTech, setEditTech)}>Update Tech</button>
+          <button onClick={() => handleUpdateItem(updateTech, editTech._id, newTech, setNewTech, setEditTech)}>Update Tech</button>
         ) : (
           <button onClick={() => handleAddItem(createTech, newTech, setNewTech)}>Add Tech</button>
         )}
@@ -103,7 +103,7 @@ const AdminPage = ({ techs = [], sites = [], notes = [] }) => {
           placeholder="Enter new site name"
         />
         {editSite ? (
-          <button onClick={() => handleUpdateItem(createSite, newSite, setNewSite, setEditSite)}>Update Site</button>
+          <button onClick={() => handleUpdateItem(updateSite, editSite._id, newSite, setNewSite, setEditSite)}>Update Site</button>
         ) : (
           <button onClick={() => handleAddItem(createSite, newSite, setNewSite)}>Add Site</button>
         )}
@@ -129,7 +129,7 @@ const AdminPage = ({ techs = [], sites = [], notes = [] }) => {
           placeholder="Enter new note"
         />
         {editNote ? (
-          <button onClick={() => handleUpdateItem(createNote, newNote, setNewNote, setEditNote)}>Update Note</button>
+          <button onClick={() => handleUpdateItem(updateNote, editNote._id, newNote, setNewNote, setEditNote)}>Update Note</button>
         ) : (
           <button onClick={() => handleAddItem(createNote, newNote, setNewNote)}>Add Note</button>
         )}

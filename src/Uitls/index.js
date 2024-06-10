@@ -1,5 +1,5 @@
-import { addNote, addTech, addSite, deleteNote, deleteTech, deleteSite } from "../db/firebase";
-import { Site, Tech, Note } from "../db/models";
+import { addNote, addTech, addSite, deleteNote, deleteTech, deleteSite, updateNote, updateTech, updateSite } from "./firebase";
+import { Site, Tech, Note } from "./models";
 
 // Create Functions
 export const createTech = async (name) => {
@@ -86,6 +86,49 @@ export const removeNote = async (id) => {
     return { message: 'Note deleted' };
   } catch (error) {
     console.error('Error deleting note:', error);
+    throw error;
+  }
+};
+
+// Update Functions
+export const updateTech = async (id, name) => {
+  try {
+    if (process.env.DATABASE === 'mongo') {
+      await Tech.findByIdAndUpdate(id, { name });
+    } else {
+      await updateTech(id, { name });
+    }
+    return { message: 'Tech updated' };
+  } catch (error) {
+    console.error('Error updating tech:', error);
+    throw error;
+  }
+};
+
+export const updateSite = async (id, name) => {
+  try {
+    if (process.env.DATABASE === 'mongo') {
+      await Site.findByIdAndUpdate(id, { name });
+    } else {
+      await updateSite(id, { name });
+    }
+    return { message: 'Site updated' };
+  } catch (error) {
+    console.error('Error updating site:', error);
+    throw error;
+  }
+};
+
+export const updateNote = async (id, name) => {
+  try {
+    if (process.env.DATABASE === 'mongo') {
+      await Note.findByIdAndUpdate(id, { name });
+    } else {
+      await updateNote(id, { name });
+    }
+    return { message: 'Note updated' };
+  } catch (error) {
+    console.error('Error updating note:', error);
     throw error;
   }
 };
