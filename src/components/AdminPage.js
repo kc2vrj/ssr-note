@@ -11,6 +11,9 @@ const AdminPage = () => {
   const [sites, setSites] = useState([]);
   const [notes, setNotes] = useState([]);
 
+  const [newTech, setNewTech] = useState('');
+  const [newSite, setNewSite] = useState('');
+
   const [editTech, setEditTech] = useState(null);
   const [editedTech, setEditedTech] = useState('');
 
@@ -32,6 +35,26 @@ const AdminPage = () => {
     };
     fetchData();
   }, []);
+
+  const handleAddTech = async () => {
+    try {
+      await addTech({ name: newTech });
+      setTechs(await getTechs());
+      setNewTech('');
+    } catch (error) {
+      console.error("Error adding tech:", error);
+    }
+  };
+
+  const handleAddSite = async () => {
+    try {
+      await addSite({ name: newSite });
+      setSites(await getSites());
+      setNewSite('');
+    } catch (error) {
+      console.error("Error adding site:", error);
+    }
+  };
 
   const handleEditTech = (tech) => {
     setEditTech(tech);
@@ -56,7 +79,6 @@ const AdminPage = () => {
     try {
       await updateFunc(id, newItem);
       resetEdit(null);
-      // Refetch data instead of reloading
       setTechs(await getTechs());
       setSites(await getSites());
       setNotes(await getNotes());
@@ -68,7 +90,6 @@ const AdminPage = () => {
   const handleDeleteItem = async (deleteFunc, id) => {
     try {
       await deleteFunc(id);
-      // Refetch data instead of reloading
       setTechs(await getTechs());
       setSites(await getSites());
       setNotes(await getNotes());
@@ -80,6 +101,15 @@ const AdminPage = () => {
   return (
     <div>
       <h1>Admin Page</h1>
+      <div>
+        <h2>Add Technician</h2>
+        <input 
+          value={newTech}
+          onChange={(e) => setNewTech(e.target.value)}
+          placeholder="Enter technician name"
+        />
+        <button onClick={handleAddTech}>Add Tech</button>
+      </div>
       <div>
         <h2>Technicians</h2>
         <ul>
@@ -107,6 +137,15 @@ const AdminPage = () => {
             </li>
           ))}
         </ul>
+      </div>
+      <div>
+        <h2>Add Site</h2>
+        <input 
+          value={newSite}
+          onChange={(e) => setNewSite(e.target.value)}
+          placeholder="Enter site name"
+        />
+        <button onClick={handleAddSite}>Add Site</button>
       </div>
       <div>
         <h2>Sites</h2>
