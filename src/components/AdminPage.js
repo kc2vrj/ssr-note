@@ -1,112 +1,68 @@
 import React, { useState } from 'react';
-import axios from 'axios';
-import { createTech,createSite } from '../Uitls';
+import { createTech, createSite, createNote, removeTech, removeSite, removeNote } from '../Uitls';
 
 const AdminPage = ({ techs = [], sites = [], notes = [] }) => {
   const [newTech, setNewTech] = useState('');
   const [newSite, setNewSite] = useState('');
   const [newNote, setNewNote] = useState('');
+  const [editTech, setEditTech] = useState(null);
+  const [editSite, setEditSite] = useState(null);
+  const [editNote, setEditNote] = useState(null);
 
-  const handleAddTech = async () => {
+  const handleAddItem = async (createFunc, newItem, setNewItem) => {
     try {
-            const response = await createTech(newTech)
-
-      if (response.status === 201) {
-        setNewTech('');
+      const response = await createFunc(newItem);
+      if (response.message) {
+        setNewItem('');
         window.location.reload();
       } else {
-        console.error('Failed to add tech');
+        console.error(`Failed to add item: ${newItem}`);
       }
     } catch (error) {
-      console.error('Error adding tech:', error);
+      console.error(`Error adding item: ${newItem}`, error);
     }
   };
 
-  const handleAddSite = async () => {
+  const handleDeleteItem = async (deleteFunc, id) => {
     try {
-            const response = await createSite(newSite)
-      if (response.status === 201) {
-        setNewSite('');
+      const response = await deleteFunc(id);
+      if (response.message) {
         window.location.reload();
       } else {
-        console.error('Failed to add site');
+        console.error(`Failed to delete item with ID: ${id}`);
       }
     } catch (error) {
-      console.error('Error adding site:', error);
+      console.error(`Error deleting item with ID: ${id}`, error);
     }
   };
 
-  const handleAddNote = async () => {
-    try {
-      const response = await axios.post('http://localhost:5000/api/notes', { 
-        note: newNote,
-        job: 'Example Job', // Placeholder values
-        tech: 'Example Tech', // Placeholder values
-        timestamp: new Date()
-      });
+  const handleEditTech = (tech) => {
+    setEditTech(tech);
+    setNewTech(tech.name);
+  };
 
-      if (response.status === 201) {
-        setNewNote('');
+  const handleEditSite = (site) => {
+    setEditSite(site);
+    setNewSite(site.name);
+  };
+
+  const handleEditNote = (note) => {
+    setEditNote(note);
+    setNewNote(note.name);
+  };
+
+  const handleUpdateItem = async (updateFunc, updatedItem, setUpdatedItem, resetEdit) => {
+    try {
+      const response = await updateFunc(updatedItem);
+      if (response.message) {
+        setUpdatedItem('');
+        resetEdit(null);
         window.location.reload();
       } else {
-        console.error('Failed to add note');
+        console.error(`Failed to update item: ${updatedItem}`);
       }
     } catch (error) {
-      console.error('Error adding note:', error);
-    }
-  };
-
-  const handleEditTech = async (tech) => {
-    try {
-      // Edit tech in Firestore (handled server-side)
-      setNewTech('');
-    } catch (error) {
-      console.error('Error editing tech:', error);
-    }
-  };
-
-  const handleDeleteTech = async (tech) => {
-    try {
-      await axios.delete(`http://localhost:5000/api/techs/${tech._id}`);
-      window.location.reload();
-    } catch (error) {
-      console.error('Error deleting tech:', error);
-    }
-  };
-
-  const handleEditSite = async (site) => {
-    try {
-      // Edit site in Firestore (handled server-side)
-      setNewSite('');
-    } catch (error) {
-      console.error('Error editing site:', error);
-    }
-  };
-
-  const handleDeleteSite = async (site) => {
-    try {
-      await axios.delete(`http://localhost:5000/api/sites/${site._id}`);
-      window.location.reload();
-    } catch (error) {
-      console.error('Error deleting site:', error);
-    }
-  };
-
-  const handleEditNote = async (note) => {
-    try {
-      // Edit note in Firestore (handled server-side)
-      setNewNote('');
-    } catch (error) {
-      console.error('Error editing note:', error);
-    }
-  };
-
-  const handleDeleteNote = async (note) => {
-    try {
-      await axios.delete(`http://localhost:5000/api/notes/${note._id}`);
-      window.location.reload();
-    } catch (error) {
-      console.error('Error deleting note:', error);
+      console.error(`Error updating item: ${updatedItem}`, error);
     }
   };
 
@@ -120,14 +76,18 @@ const AdminPage = ({ techs = [], sites = [], notes = [] }) => {
           onChange={(e) => setNewTech(e.target.value)} 
           placeholder="Enter new technician name"
         />
-        <button onClick={handleAddTech}>Add Tech</button>
+        {editTech ? (
+          <button onClick={() => handleUpdateItem(createTech, newTech, setNewTech, setEditTech)}>Update Tech</button>
+        ) : (
+          <button onClick={() => handleAddItem(createTech, newTech, setNewTech)}>Add Tech</button>
+        )}
         <ul>
           {techs.length > 0 ? (
             techs.map((tech) => (
               <li key={tech._id}>
                 {tech.name}
                 <button onClick={() => handleEditTech(tech)}>Edit</button>
-                <button onClick={() => handleDeleteTech(tech)}>Delete</button>
+                <button onClick={() => handleDeleteItem(removeTech, tech._id)}>Delete</button>
               </li>
             ))
           ) : (
@@ -142,14 +102,18 @@ const AdminPage = ({ techs = [], sites = [], notes = [] }) => {
           onChange={(e) => setNewSite(e.target.value)} 
           placeholder="Enter new site name"
         />
-        <button onClick={handleAddSite}>Add Site</button>
+        {editSite ? (
+          <button onClick={() => handleUpdateItem(createSite, newSite, setNewSite, setEditSite)}>Update Site</button>
+        ) : (
+          <button onClick={() => handleAddItem(createSite, newSite, setNewSite)}>Add Site</button>
+        )}
         <ul>
           {sites.length > 0 ? (
             sites.map((site) => (
               <li key={site._id}>
                 {site.name}
                 <button onClick={() => handleEditSite(site)}>Edit</button>
-                <button onClick={() => handleDeleteSite(site)}>Delete</button>
+                <button onClick={() => handleDeleteItem(removeSite, site._id)}>Delete</button>
               </li>
             ))
           ) : (
@@ -164,7 +128,11 @@ const AdminPage = ({ techs = [], sites = [], notes = [] }) => {
           onChange={(e) => setNewNote(e.target.value)} 
           placeholder="Enter new note"
         />
-        <button onClick={handleAddNote}>Add Note</button>
+        {editNote ? (
+          <button onClick={() => handleUpdateItem(createNote, newNote, setNewNote, setEditNote)}>Update Note</button>
+        ) : (
+          <button onClick={() => handleAddItem(createNote, newNote, setNewNote)}>Add Note</button>
+        )}
         <ul>
           {notes.length > 0 ? (
             notes.map((note) => (
@@ -174,7 +142,7 @@ const AdminPage = ({ techs = [], sites = [], notes = [] }) => {
                 <p>Tech: {note.tech}</p>
                 <p>Timestamp: {new Date(note.timestamp).toLocaleString()}</p>
                 <button onClick={() => handleEditNote(note)}>Edit</button>
-                <button onClick={() => handleDeleteNote(note)}>Delete</button>
+                <button onClick={() => handleDeleteItem(removeNote, note._id)}>Delete</button>
               </li>
             ))
           ) : (
