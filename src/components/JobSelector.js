@@ -1,28 +1,34 @@
+// src/components/JobSelector.js
 import React, { useState, useEffect } from 'react';
+import { getSites } from '../db/firebase';  // Import getSites from firebase.js
 
-const JobSelector = ({ selectedTech, setTech }) => {
-  const [techs, setTechs] = useState([]);
+const JobSelector = ({ selectedJob, setJob }) => {
+  const [jobs, setJobs] = useState([]);
 
   useEffect(() => {
-    // Fetch techs from the server
-    const fetchTechs = async () => {
-      // This should be handled on the server side
-      setTechs([]);
+    const fetchJobs = async () => {
+      try {
+        const fetchedJobs = await getSites();
+        setJobs(fetchedJobs);
+        console.log('Fetched jobs:', fetchedJobs);
+      } catch (error) {
+        console.error('Error fetching jobs (sites):', error);
+      }
     };
 
-    fetchTechs();
+    fetchJobs();
   }, []);
 
-  const handleTechChange = (e) => {
-    setTech(e.target.value);
+  const handleJobChange = (e) => {
+    setJob(e.target.value);
   };
 
   return (
-    <select value={selectedTech} onChange={handleTechChange}>
-      <option value="">Select a tech</option>
-      {techs.map((tech) => (
-        <option key={tech} value={tech}>
-          {tech}
+    <select value={selectedJob} onChange={handleJobChange}>
+      <option value="">Select a job</option>
+      {jobs.map((job) => (
+        <option key={job.id} value={job.name}>
+          {job.name}
         </option>
       ))}
     </select>

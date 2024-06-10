@@ -1,32 +1,31 @@
+// src/components/NoteForm.js
 import React, { useState } from 'react';
-import axios from 'axios';
 import JobSelector from './JobSelector';
 import TechSelector from './TechSelector';
+import { addNote } from '../db/firebase';
 
-const NoteForm = ({ sites }) => {
+const NoteForm = () => {
   const [note, setNote] = useState('');
   const [selectedJob, setSelectedJob] = useState('');
   const [selectedTech, setSelectedTech] = useState('');
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-
+    if (!note || !selectedJob || !selectedTech) {
+      console.error('Please fill in all fields');
+      return;
+    }
     try {
-      const response = await axios.post('http://localhost:5000/api/notes', {
+      await addNote({
         note,
         job: selectedJob,
         tech: selectedTech,
         timestamp: new Date().toISOString(),
       });
-
-      if (response.status === 201) {
-        // Clear the form
-        setNote('');
-        setSelectedJob('');
-        setSelectedTech('');
-      } else {
-        console.error('Failed to add note');
-      }
+      console.log('Note added successfully');
+      setNote('');
+      setSelectedJob('');
+      setSelectedTech('');
     } catch (error) {
       console.error('Error adding note:', error);
     }

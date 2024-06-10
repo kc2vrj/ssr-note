@@ -1,13 +1,19 @@
+// src/components/TechSelector.js
 import React, { useState, useEffect } from 'react';
+import { getTechs } from '../db/firebase';  // Import getTechs from firebase.js
 
 const TechSelector = ({ selectedTech, setTech }) => {
   const [techs, setTechs] = useState([]);
 
   useEffect(() => {
-    // Fetch techs from the server
     const fetchTechs = async () => {
-      // This should be handled on the server side
-      setTechs([]);
+      try {
+        const fetchedTechs = await getTechs();
+        setTechs(fetchedTechs);
+        console.log('Fetched techs:', fetchedTechs);
+      } catch (error) {
+        console.error('Error fetching techs:', error);
+      }
     };
 
     fetchTechs();
@@ -21,8 +27,8 @@ const TechSelector = ({ selectedTech, setTech }) => {
     <select value={selectedTech} onChange={handleTechChange}>
       <option value="">Select a tech</option>
       {techs.map((tech) => (
-        <option key={tech} value={tech}>
-          {tech}
+        <option key={tech.id} value={tech.name}>
+          {tech.name}
         </option>
       ))}
     </select>
