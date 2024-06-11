@@ -1,5 +1,8 @@
 // src/components/AdminPage.js
 import React, { useState, useEffect } from 'react';
+import { auth } from '../Uitls/firebaseConfig';
+import { onAuthStateChanged } from 'firebase/auth';
+import { signUp, logIn, logOut } from '../Uitls/auth';
 import { 
   addTech, updateTech, deleteTech, getTechs,
   addSite, updateSite, deleteSite, getSites,
@@ -7,6 +10,7 @@ import {
 } from '../db/firebase';
 
 const AdminPage = () => {
+  const [user, setUser] = useState(null);
   const [techs, setTechs] = useState([]);
   const [sites, setSites] = useState([]);
   const [notes, setNotes] = useState([]);
@@ -23,6 +27,9 @@ const AdminPage = () => {
   const [editNote, setEditNote] = useState(null);
   const [editedNote, setEditedNote] = useState({ note: '', job: '', tech: '' });
 
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+
   useEffect(() => {
     const fetchData = async () => {
       try {
@@ -34,6 +41,13 @@ const AdminPage = () => {
       }
     };
     fetchData();
+  }, []);
+
+  useEffect(() => {
+    const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
+      setUser(currentUser);
+    });
+    return () => unsubscribe();
   }, []);
 
   const handleAddTech = async () => {
@@ -98,9 +112,56 @@ const AdminPage = () => {
     }
   };
 
+  const handleSignUp = async () => {
+    try {
+      await signUp(email, password);
+    } catch (error) {
+      console.error("Error signing up:", error);
+    }
+  };
+
+  const handleLogIn = async () => {
+    try {
+      await logIn(email, password);
+    } catch (error) {
+      console.error("Error logging in:", error);
+    }
+  };
+
+  const handleLogOut = async () => {
+    try {
+      await logOut();
+    } catch (error) {
+      console.error("Error logging out:", error);
+    }
+  };
+
+  if (!user) {
+    return (
+      <div>
+        <h1>Login</h1>
+        <input 
+          type="email" 
+          value={email} 
+          onChange={(e) => setEmail(e.target.value)} 
+          placeholder="Email" 
+        />
+        <input 
+          type="password" 
+          value={password} 
+          onChange={(e) => setPassword(e.target.value)} 
+          placeholder="Password" 
+        />
+        <button onClick={handleLogIn}>Login</button>
+        <button onClick={handleSignUp}>Sign Up</button>
+      </div>
+    );
+  }
+
   return (
     <div>
       <h1>Admin Page</h1>
+      <button onClick={handleLogOut}>Log Out</button>
       <div>
         <h2>Add Technician</h2>
         <input 
